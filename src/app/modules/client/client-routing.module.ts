@@ -9,23 +9,23 @@ import { AccountHistoryComponent } from './account-history/account-history.compo
 const routes: Routes = [
   {
     path:'',
-    component: HomeComponent
+    loadChildren: () => import('app/modules/client/home/home.module') .then(m => m.HomeModule),
   },
   {
     path: 'account',
-    component: AccountComponent
+    loadChildren: () => import('app/modules/client/account/account.module') .then(m => m.AccountModule),
   },
   {
     path: 'account-operations',
-    component: AccountOperationsComponent,
+    loadChildren: () => import('app/modules/client/account-operations/account-operations.module') .then(m => m.AccountOperationsModule),
   },
   {
     path: 'account-transactions',
-    component: AccountTransactionComponent
+    loadChildren: () => import('app/modules/client/account-transaction/account-transaction.module') .then(m => m.AccountTransactionModule),
   },
   {
     path: 'account-history',
-    component: AccountHistoryComponent
+    loadChildren: () => import('app/modules/client/account-history/account-history.module') .then(m => m.AccountHistoryModule),
   }
 ];
 

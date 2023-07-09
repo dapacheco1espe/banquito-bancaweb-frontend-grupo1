@@ -5,16 +5,13 @@ import { ClientRoutingModule } from './client-routing.module';
 import { AccountOperationsComponent } from './account-operations/account-operations.component';
 import { AccountTransactionComponent } from './account-transaction/account-transaction.component';
 import { AccountHistoryComponent } from './account-history/account-history.component';
+import { SharedModule } from 'app/shared/shared.module';
 
 
 @NgModule({
-  declarations: [
-    AccountOperationsComponent,
-    AccountTransactionComponent,
-    AccountHistoryComponent
-  ],
+  declarations: [],
   imports: [
-    CommonModule,
+    SharedModule,
     ClientRoutingModule
   ]
 })
