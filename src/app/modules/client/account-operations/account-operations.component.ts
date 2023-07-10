@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-account-operations',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountOperationsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _router:Router) { }
 
   ngOnInit(): void {
   }
+
+  public goToDefinedOperation(operation: 'transferencia'| 'historial'):void{
+    operation === 'transferencia' ? this._router.navigateByUrl('/client/account-transactions') : this._router.navigateByUrl('/client/account-history');
+  }
+
 
 }
