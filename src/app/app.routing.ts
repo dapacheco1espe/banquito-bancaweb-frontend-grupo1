@@ -65,11 +65,6 @@ export const appRoutes: Route[] = [
             {
                 path : 'client',
                 loadChildren: () => import('app/modules/client/client.module') .then(m => m.ClientModule),
-    
-            },
-            {
-                path: 'transferencias',
-                loadChildren: () => import('app/modules/client/account-transaction/account-transaction.module').then(m => m.AccountTransactionModule),
             }
         ]
     }
