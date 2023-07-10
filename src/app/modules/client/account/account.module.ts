@@ -1,12 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {Component} from '@angular/core';
-import {MatCardModule,} from '@angular/material/card';
+import {MatTabsModule} from '@angular/material/tabs';
 import { AccountRoutingModule } from './account-routing.module';
 import { AccountComponent } from './account.component';
 import { SharedModule } from 'app/shared/shared.module';
-import { MatIconModule } from '@angular/material/icon';
-
 
 
 @NgModule({
@@ -16,9 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [
     SharedModule,
     AccountRoutingModule,
-    MatCardModule,
-    MatIconModule
-
+    MatTabsModule
   ]
 })
 export class AccountModule { }

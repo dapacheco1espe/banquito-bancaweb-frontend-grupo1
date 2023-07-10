@@ -1,5 +1,4 @@
-import { OnInit } from '@angular/core';
-import {Component} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-account',
@@ -14,6 +13,3 @@ export class AccountComponent implements OnInit {
   }
 
 }
-
-
-
