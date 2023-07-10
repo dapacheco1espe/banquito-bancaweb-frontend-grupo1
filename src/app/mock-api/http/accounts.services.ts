@@ -12,22 +12,22 @@ export class AccountService {
     public getAccount(): Observable<Account[]> {
         const mockAccount: Account[] = [
             {
-                code: '2290876755',
-                name: 'AHO1',
-                balance: 100.0,
-                type: 'AHORROS',
+                code: '2123464979',
+                name: 'AHO4979',
+                balance: 1055.41,
+                type: 'Cuenta de Ahorros',
             },
             {
-                code: '2389476563',
-                name: 'COR1',
-                balance: 150.0,
-                type: 'CORRIENTE',
+                code: '278965412',
+                name: 'CCO5779',
+                balance: 890.25,
+                type: 'Cuenta Corriente',
             },
             {
-                code: '2490876538',
-                name: 'PRO1',
-                balance: 150.0,
-                type: 'PROGRAMADO',
+                code: '6598741236',
+                name: 'AHOPR4979',
+                balance: 247.54,
+                type: 'Cuenta de Ahorro Programado',
             },
         ];
 
