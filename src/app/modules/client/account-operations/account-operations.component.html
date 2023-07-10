@@ -1,22 +1,19 @@
-<h1>Operaciones</h1>
-<mat-card class="example-card">
-    <mat-card-header>
-      <mat-icon class="card-icon">attach_money</mat-icon>
-      <mat-card-title>Transferencia</mat-card-title>
-      <mat-card-subtitle>Transfiere tu dinero cuando quieras y a donde quieras</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-actions>
-      <button mat-raised-button class="button">Entrar</button>
-    </mat-card-actions>
-  </mat-card>
-  
-  <mat-card class="example-card1">
-    <mat-card-header class="example-card2">
-      <mat-icon class="card-icon">history</mat-icon>
-      <mat-card-title>Historial</mat-card-title>
-      <mat-card-subtitle>Observa tu historial de transferencias</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-actions>
-      <button mat-raised-button class="button">Entrar</button>
-    </mat-card-actions>
-  </mat-card>
+<div class="w-full h-full flex flex-col p-4">
+  <h1 class="font-bold text-blue-500 text-3xl">Operaciones</h1>
+  <div class="flex flex-col justify-center sm:flex-row gap-5 m-auto">
+    <section (click)="goToDefinedOperation('transferencia');" class="w-full sm:w-1/2 cursor-pointer bg-white rounded-md flex flex-col justify-center p-4 h-52 border-solid border-2 border-primary-300">
+        <h1 class="flex flex-col gap-2 text-center font-bold text-blue-500 text-3xl">
+          <mat-icon class="self-center icon-size-10 text-blue-500" svgIcon="heroicons_outline:currency-dollar"></mat-icon>
+        Transferencia
+      </h1>
+      <p class="text-center text-blue-500">Transfiere tu dinero cuando quieras y a donde quieras</p>
+    </section> 
+    <section (click)="goToDefinedOperation('historial');" class="w-full sm:w-1/2 cursor-pointer bg-white rounded-md flex flex-col justify-center p-4 h-52 border-solid border-2 border-primary-300">
+      <h1 class="flex flex-col gap-2 text-center font-bold text-blue-500 text-3xl">
+        <mat-icon class="self-center icon-size-10 text-blue-500" svgIcon="history"></mat-icon>
+        Historial
+      </h1>
+      <p class="text-center text-blue-500">Observa tu historial de transferencias</p>
+    </section>  
+  </div>
+</div>
