@@ -1,5 +1,6 @@
-import { OnInit } from '@angular/core';
-import {Component} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { AccountService } from './services/account.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-account',
@@ -8,12 +9,11 @@ import {Component} from '@angular/core';
 })
 export class AccountComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private _accountService:AccountService, private _changeDetector:ChangeDetectorRef) { }
+  public accounts$:Observable<any>;
   ngOnInit(): void {
+    this.accounts$ = this._accountService.accounts$;
+    this._changeDetector.markForCheck();
   }
 
 }
-
-
-

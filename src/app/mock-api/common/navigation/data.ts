@@ -39,7 +39,7 @@ export const compactNavigation: FuseNavigationItem[] = [
                 title   : 'Pagos',
                 tooltip : 'Pagos',
                 type    : 'basic',
-                icon    : 'heroicons_outline:banknotes',
+                icon    : 'heroicons_outline:currency-dollar',
                 //link    : '/account-operations'
             },
             // {
