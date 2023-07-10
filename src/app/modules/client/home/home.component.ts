@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
         this.getLoan();
     }
 
-    public navigateToPages(page: 'account' | 'payments' | 'loans') {
+    public navigateToPages(page: 'account' | 'account-transactions' | 'loans') {
         this.router.navigateByUrl(`/client/${page}`);
     }
 
