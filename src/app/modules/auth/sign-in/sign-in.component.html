@@ -7,7 +7,8 @@
             </div>
 
             <!-- Title -->
-            <div class="mt-8 text-4xl font-extrabold tracking-tight leading-tight">Sign in</div>
+            <div class="mt-8 text-4xl font-extrabold tracking-tight leading-tight">BIENVENIDO A BANQUITO</div>
+            <!--
             <div class="flex items-baseline mt-0.5 font-medium">
                 <div>Don't have an account?</div>
                 <a
@@ -15,7 +16,7 @@
                     [routerLink]="['/sign-up']">Sign up
                 </a>
             </div>
-
+            -->
             <!-- Alert -->
             <fuse-alert
                 class="mt-8 -mb-4"
@@ -35,22 +36,22 @@
 
                 <!-- Email field -->
                 <mat-form-field class="w-full">
-                    <mat-label>Email address</mat-label>
+                    <mat-label>Correo Electrónico</mat-label>
                     <input
                         id="email"
                         matInput
                         [formControlName]="'email'">
                     <mat-error *ngIf="signInForm.get('email').hasError('required')">
-                        Email address is required
+                        Correo electrónico requerido
                     </mat-error>
                     <mat-error *ngIf="signInForm.get('email').hasError('email')">
-                        Please enter a valid email address
+                        Por favor ingrese un correo electrónico válido
                     </mat-error>
                 </mat-form-field>
 
                 <!-- Password field -->
                 <mat-form-field class="w-full">
-                    <mat-label>Password</mat-label>
+                    <mat-label>Contraseña</mat-label>
                     <input
                         id="password"
                         matInput
@@ -72,7 +73,7 @@
                             [svgIcon]="'heroicons_solid:eye-off'"></mat-icon>
                     </button>
                     <mat-error>
-                        Password is required
+                        La contraseña es requerida
                     </mat-error>
                 </mat-form-field>
 
@@ -81,11 +82,11 @@
                     <mat-checkbox
                         [color]="'primary'"
                         [formControlName]="'rememberMe'">
-                        Remember me
+                        Recordar
                     </mat-checkbox>
                     <a
                         class="text-md font-medium text-primary-500 hover:underline"
-                        [routerLink]="['/forgot-password']">Forgot password?
+                        [routerLink]="['/forgot-password']">¿Ovidó su contraseña?
                     </a>
                 </div>
 
@@ -97,7 +98,7 @@
                     [disabled]="signInForm.disabled"
                     (click)="signIn()">
                     <span *ngIf="!signInForm.disabled">
-                        Sign in
+                        Iniciar sesión
                     </span>
                     <mat-progress-spinner
                         *ngIf="signInForm.disabled"
@@ -105,14 +106,14 @@
                         [mode]="'indeterminate'"></mat-progress-spinner>
                 </button>
 
-                <!-- Separator -->
+                <!-- Separator
                 <div class="flex items-center mt-8">
                     <div class="flex-auto mt-px border-t"></div>
                     <div class="mx-2 text-secondary">Or continue with</div>
                     <div class="flex-auto mt-px border-t"></div>
                 </div>
-
-                <!-- Single sign-on buttons -->
+                -->
+                <!-- Single sign-on buttons
                 <div class="flex items-center mt-8 space-x-4">
                     <button
                         class="flex-auto"
@@ -139,6 +140,7 @@
                             [svgIcon]="'feather:github'"></mat-icon>
                     </button>
                 </div>
+                -->
             </form>
         </div>
     </div>
@@ -166,13 +168,13 @@
         <!-- Content -->
         <div class="z-10 relative w-full max-w-2xl">
             <div class="text-7xl font-bold leading-none text-gray-100">
-                <div>Welcome to</div>
-                <div>our community</div>
+                <div>BANQUITO</div>
+
             </div>
             <div class="mt-6 text-lg tracking-tight leading-6 text-gray-400">
-                Fuse helps developers to build organized and well coded dashboards full of beautiful and rich modules.
-                Join us and start building your application today.
+                BANCA WEB
             </div>
+            <!--
             <div class="flex items-center mt-8">
                 <div class="flex flex-0 items-center -space-x-1.5">
                     <img
@@ -190,6 +192,7 @@
                 </div>
                 <div class="ml-4 font-medium tracking-tight text-gray-400">More than 17k people joined us, it's your turn</div>
             </div>
+            -->
         </div>
     </div>
 </div>
