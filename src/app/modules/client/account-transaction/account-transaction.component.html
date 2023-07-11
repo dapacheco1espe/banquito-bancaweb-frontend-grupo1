@@ -7,11 +7,13 @@
             </div>
             <div class="border-b"></div>
             <div class="mt-6 mx-4">
-                <p class=" font-semibold text-primary-500">Nro. Cuenta Destino</p>
+                <p class=" font-semibold">Nro. Cuenta Destino</p>
                 <input type="text"
+                id="accountNumber"
                     class="mt-2 mr-2 max-w-sm px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:border-blue-500"
                     placeholder="Ingresa el número de cuenta">
                 <button type="button"
+                (click)="validateAccount();"
                     class="text-white bg-primary-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Validar
                     Cuenta</button>
             </div>
@@ -23,12 +25,12 @@
                     <h5 class="mb-2 text-2xl font-semibold tracking-tight text-primary-500 dark:text-white">Datos de la
                         cuenta origen</h5>
 
-                    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400"> <b>Nro. Cuenta:</b> AHO497923232332
+                    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400"> <b>Nro. Cuenta:</b> {{account.accountNumber}}
                     </p>
                     <p class="mb-3 font-normal text-gray-500 dark:text-gray-400"> <b>Saldo antes del movimiento:</b> $
-                        1000.00</p>
+                        {{account.accountBalance}} USD</p>
                     <p class="mb-3 font-normal text-gray-500 dark:text-gray-400"> <b>Saldo después del movimiento: </b>
-                        $ 1000.00 </p>
+                        $ {{accountBalanceAfterTransaction.toFixed(2)}} USD </p>
                 </div>
 
                 <div
@@ -50,6 +52,9 @@
 
                 <p class="text-sm font-semibold text-primary-500">Monto a transferir</p>
                 <input type="number"
+                    min="0"
+                    step="0.01"
+                    (keyup)="calculateBalance($event);"
                     class="mt-2 mr-2 max-w-sm px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:border-blue-500"
                     placeholder="Ingresa el monto a transferir">
                 <button type="button"
