@@ -19,39 +19,39 @@ export const compactNavigation: FuseNavigationItem[] = [
         icon    : 'heroicons_outline:home',
         link    : '/client'
     },
-    {
-        id      : 'products',
-        title   : 'Productos',
-        tooltip : 'Productos',
-        type    : 'aside',
-        icon    : 'feather:shopping-bag',
-        children: [
-            {
-                id      : 'cuentas',
-                title   : 'Cuentas',
-                tooltip : 'Cuentas',
-                type    : 'basic',
-                icon    : 'heroicons_outline:academic-cap',
-                link    : '/client/account'
-            },
-            {
-                id      : 'payments',
-                title   : 'Pagos',
-                tooltip : 'Pagos',
-                type    : 'basic',
-                icon    : 'heroicons_outline:currency-dollar',
-                //link    : '/account-operations'
-            },
-            // {
-            //     id      : 'history',
-            //     title   : 'Historial de transancciones',
-            //     tooltip : 'Historial de transacciones',
-            //     type    : 'basic',
-            //     icon    : 'heroicons_outline:document-text',
-            //     //link    : '/account-history'
-            // }
-        ]
-    },
+    // {
+    //     id      : 'products',
+    //     title   : 'Productos',
+    //     tooltip : 'Productos',
+    //     type    : 'aside',
+    //     icon    : 'feather:shopping-bag',
+    //     children: [
+    //         {
+    //             id      : 'cuentas',
+    //             title   : 'Cuentas',
+    //             tooltip : 'Cuentas',
+    //             type    : 'basic',
+    //             icon    : 'heroicons_outline:academic-cap',
+    //             link    : '/client/account'
+    //         },
+    //         {
+    //             id      : 'payments',
+    //             title   : 'Pagos',
+    //             tooltip : 'Pagos',
+    //             type    : 'basic',
+    //             icon    : 'heroicons_outline:currency-dollar',
+    //             //link    : '/account-operations'
+    //         },
+    //         // {
+    //         //     id      : 'history',
+    //         //     title   : 'Historial de transancciones',
+    //         //     tooltip : 'Historial de transacciones',
+    //         //     type    : 'basic',
+    //         //     icon    : 'heroicons_outline:document-text',
+    //         //     //link    : '/account-history'
+    //         // }
+    //     ]
+    // },
 
 ];
 export const futuristicNavigation: FuseNavigationItem[] = [
