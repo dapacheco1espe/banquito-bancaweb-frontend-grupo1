@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AccountService } from 'app/mock-api/http/accounts.services';
 import { LoanService } from 'app/mock-api/http/loans.services';
-import { Account } from 'app/mock-api/types/account.types';
 import { Loan } from 'app/mock-api/types/loan.types';
+import { Account } from '../Models/Account';
+import { AccountService } from '../account/services/account.service';
+import { AccountOperationsDataShareService } from '../services/account-operations-data-share.service';
 
 @Component({
     selector: 'app-home',
@@ -17,7 +18,8 @@ export class HomeComponent implements OnInit {
     constructor(
         private router: Router,
         private account: AccountService,
-        private loan: LoanService
+        private loan: LoanService,
+        private _accountOperationsDataShareService:AccountOperationsDataShareService,
     ) {}
 
     ngOnInit(): void {
@@ -30,10 +32,9 @@ export class HomeComponent implements OnInit {
     }
 
     public getAccount() {
-        this.account.getAccount().subscribe({
+        this.account.getUserAccounts(1).subscribe({
             next: (response) => {
                 this.acc = response;
-                console.log(this.acc);
             },
         });
     }
@@ -45,5 +46,10 @@ export class HomeComponent implements OnInit {
                 console.log(this.acc);
             },
         });
+    }
+
+    public saveAccountOnServiceForDataShare(account:Account){
+        this._accountOperationsDataShareService.account = account;
+        this.router.navigateByUrl('/client/account-operations');
     }
 }
