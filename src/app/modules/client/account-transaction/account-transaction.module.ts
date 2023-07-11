@@ -1,10 +1,8 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
 import { AccountTransactionRoutingModule } from './account-transaction-routing.module';
 import { AccountTransactionComponent } from './account-transaction.component';
 import { SharedModule } from 'app/shared/shared.module';
-
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -12,7 +10,8 @@ import { SharedModule } from 'app/shared/shared.module';
   ],
   imports: [
     SharedModule,
-    AccountTransactionRoutingModule
+    AccountTransactionRoutingModule,
+    MatButtonModule
   ]
 })
 export class AccountTransactionModule { }
