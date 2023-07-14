@@ -10,6 +10,8 @@ import { tap } from 'rxjs/operators';
 export class AccountService {
   
   private _accounts:BehaviorSubject<Account[]> = new BehaviorSubject<Account[]>([]);
+
+  private urlApi='https://64b14cc3062767bc4825fe08.mockapi.io/api/v1/productAccount';
   
   constructor(private _http:HttpClient) {
 
@@ -24,5 +26,10 @@ export class AccountService {
         this._accounts.next(response);
       })
     );
+  }
+
+
+  public getProductAccount(): Observable<any>{
+    return this._http.get<any>(this.urlApi);
   }
 }

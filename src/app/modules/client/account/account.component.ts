@@ -12,12 +12,16 @@ import { Account } from '../Models/Account';
 })
 export class AccountComponent implements OnInit {
 
+  dataProductAccount: any[] = [];
+
+
   constructor(private _accountService:AccountService, private _changeDetector:ChangeDetectorRef,
     private _router:Router, private _accountOperationsDataShareService:AccountOperationsDataShareService) { }
   public accounts$:Observable<any>;
   ngOnInit(): void {
     this.accounts$ = this._accountService.accounts$;
     this._changeDetector.markForCheck();
+    this.obtainProductAccount();
   }
 
     isPopupOpen = false;
@@ -48,6 +52,13 @@ export class AccountComponent implements OnInit {
 
     stopPropagation(event: Event) {
       event.stopPropagation();
+    }
+    
+    obtainProductAccount(){
+      this._accountService.getProductAccount().subscribe( data=>{
+        this.dataProductAccount=data;
+        
+      } )
     }
 
   public goToOperationsBoard(account:Account){

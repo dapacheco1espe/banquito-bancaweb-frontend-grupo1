@@ -10,10 +10,13 @@ import { Account } from '../Models/Account';
 })
 export class AccountTransactionComponent implements OnInit {
 
+  
+
   constructor(private _accountOperationDataShareService:AccountOperationsDataShareService) { }
   public account:Account;
   public accountBalanceAfterTransaction:Number = 0;
   ngOnInit(): void {
+    
     this._accountOperationDataShareService.account$.subscribe({
       next:(account:Account)=>{
         this.account = account;
@@ -33,5 +36,8 @@ export class AccountTransactionComponent implements OnInit {
     const total = this.account.accountBalance - parseFloat(input.value);
     this.accountBalanceAfterTransaction = total < 0 ? 0 :total ;
   }
+
+  
+
 
 }

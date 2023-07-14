@@ -38,12 +38,11 @@
     </div>
     <h2 class="text-lg font-bold mb-4">¿Qué tipo de cuenta deseas?</h2>
     <div class="grid grid-cols-3 gap-4">
-      
-      <div class="bg-gray-200 p-4 rounded" (click)="showSuccessMessage('Cuenta 1')">
-        <h3 class="text-lg font-bold mb-2">Cuenta 1</h3>
-        <p>Descripción de la cuenta 1</p>
+      <ng-container *ngFor="let itemProductoAccount of dataProductAccount"> 
+      <div class="bg-gray-200 p-4 rounded" (click)="showSuccessMessage('Cuenta')">
+        <h3 class="text-lg text-center font-bold mb-2"> {{itemProductoAccount.name}}</h3>
       </div>
-
+    </ng-container>
     </div>
 
   </div>
