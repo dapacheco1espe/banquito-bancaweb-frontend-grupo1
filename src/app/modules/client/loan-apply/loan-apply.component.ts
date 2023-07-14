@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-loan-apply',
   templateUrl: './loan-apply.component.html',
@@ -7,11 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoanApplyComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
   cuotas: string = '12';
   mostrarOtroCuotas: boolean = false;
   ngOnInit(): void {
     
+  }
+  public navigateToPages(page: 'loan-amortization') {
+    this.router.navigateByUrl(`/client/${page}`);
   }
   onCuotasChange() {
     if (this.cuotas !== 'otro') {

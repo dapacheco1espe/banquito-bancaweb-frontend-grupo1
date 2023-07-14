@@ -45,6 +45,11 @@ const routes: Routes = [
     path: 'loan-apply',
     loadChildren: () => import('app/modules/client/loan-apply/loan-apply.module') .then(m => m.LoanApplyModule),
   }
+  ,
+  {
+    path: 'loan-amortization',
+    loadChildren: () => import('app/modules/client/loan-amortization/loan-amortization.module') .then(m => m.LoanAmortizationModule),
+  }
   
 ];
 

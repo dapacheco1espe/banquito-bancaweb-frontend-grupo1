@@ -10,11 +10,11 @@ import { AccountSettingComponent } from './account-setting/account-setting.compo
 import { LoanComponent } from './loan/loan.component';
 import { LoanApplyComponent } from './loan-apply/loan-apply.component';
 import { LoanProductComponent } from './loan-product/loan-product.component';
+import { LoanAmortizationComponent } from './loan-amortization/loan-amortization.component';
 
 
 @NgModule({
   declarations: [
-    
   ],
   imports: [
     SharedModule,
