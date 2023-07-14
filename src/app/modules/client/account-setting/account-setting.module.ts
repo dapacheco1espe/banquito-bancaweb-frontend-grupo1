@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AccountOperationsRoutingModule } from './account-operations-routing.module';
-import { AccountOperationsComponent } from './account-operations.component';
+import { AccountSettingRoutingModule } from './account-setting-routing.module';
+import { AccountSettingComponent } from './account-setting.component';
 import { SharedModule } from 'app/shared/shared.module';
 import {MatIconModule} from '@angular/material/icon';
 
@@ -10,12 +10,12 @@ import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   declarations: [
-    AccountOperationsComponent
+    AccountSettingComponent
   ],
   imports: [
     SharedModule,
-    AccountOperationsRoutingModule,
+    AccountSettingRoutingModule,
     MatIconModule,
   ]
 })
-export class AccountOperationsModule { }
+export class AccountSettingModule { }

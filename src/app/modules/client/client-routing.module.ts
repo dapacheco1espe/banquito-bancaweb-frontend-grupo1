@@ -5,7 +5,7 @@ import { AccountComponent } from './account/account.component';
 import { AccountOperationsComponent } from './account-operations/account-operations.component';
 import { AccountTransactionComponent } from './account-transaction/account-transaction.component';
 import { AccountHistoryComponent } from './account-history/account-history.component';
-
+import { LoanComponent } from './loan/loan.component';
 const routes: Routes = [
   {
     path:'',
@@ -26,7 +26,26 @@ const routes: Routes = [
   {
     path: 'account-history',
     loadChildren: () => import('app/modules/client/account-history/account-history.module') .then(m => m.AccountHistoryModule),
+  },
+  {
+    path: 'account-setting',
+    loadChildren: () => import('app/modules/client/account-setting/account-setting.module') .then(m => m.AccountSettingModule),
+  },
+  {
+    path: 'loan',
+    loadChildren: () => import('app/modules/client/loan/loan.module') .then(m => m.LoanModule),
   }
+  ,
+  {
+    path: 'loan-product',
+    loadChildren: () => import('app/modules/client/loan-product/loan-product.module') .then(m => m.LoanProductModule),
+  }
+  ,
+  {
+    path: 'loan-apply',
+    loadChildren: () => import('app/modules/client/loan-apply/loan-apply.module') .then(m => m.LoanApplyModule),
+  }
+  
 ];
 
 @NgModule({
