@@ -1,17 +1,17 @@
 <div class="w-full">
-    <div class="container mx-auto p-8">
+    <div  class="container mx-auto p-8">
         <h1 class="text-4xl font-bold mb-4">Historial de Transacciones</h1>
-        <h2 class="text-lg text-gray-600">Revisa el historial de tus transacciones</h2>
+        <h2 class="text-lg text-gray-600">Cuenta : {{account.name}} - {{account.codeInternalAccount}}</h2>
       
         <div class="flex mt-8">
           <div class="mr-8">
             <div class="flex">
             <h3 class="text-lg font-bold mb-2">Saldo Actual</h3>
-            <p class="text-m ml-4">1055.41</p>
+            <p class="text-m ml-4">{{account.availableBalance}}</p>
         </div>
         <div class="flex">
             <h6 class="mb-2">Saldo Contable</h6>
-            <p class="text-sm ml-4">1055.41</p>
+            <p class="text-sm ml-4">{{account.totalBalance}}</p>
         </div>
           </div>
           

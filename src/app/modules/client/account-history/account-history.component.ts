@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountHistoryService } from './services/account-history.service';
-
+import { AccountOperationsDataShareService } from '../services/account-operations-data-share.service';
+import { Account } from '../Models/Account';
 @Component({
   selector: 'app-account-history',
   templateUrl: './account-history.component.html',
@@ -8,22 +8,22 @@ import { AccountHistoryService } from './services/account-history.service';
 })
 export class AccountHistoryComponent implements OnInit {
 
-  accountId: string = '0'; 
+  accountId: string = '0';
   accountData: any;
 
-  constructor(private accountService: AccountHistoryService) { }
+  constructor(private _accountOperationDataShareService: AccountOperationsDataShareService) { }
 
+  public account: Account;
   ngOnInit(): void {
-    this.obtainAccountById();
-  }
-  obtainAccountById(): void {
-    this.accountService.getAccountById(this.accountId)
-      .subscribe(data => {
-        this.accountData = data;
-        console.log(this.accountData);
-      });
+
+    this._accountOperationDataShareService.account$.subscribe({
+      next: (account: Account) => {
+        this.account = account;
+      }
+    });
   }
 
-  
+
+
 
 }

@@ -10,6 +10,7 @@
                 <p class=" font-semibold">Nro. Cuenta Destino</p>
                 <input type="text"
                 id="accountNumber"
+                [(ngModel)]="accountNumber"
                     class="mt-2 mr-2 max-w-sm px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:border-blue-500"
                     placeholder="Ingresa el número de cuenta">
                 <button type="button"
@@ -25,10 +26,10 @@
                     <h5 class="mb-2 text-2xl font-semibold tracking-tight text-primary-500 dark:text-white">Datos de la
                         cuenta origen</h5>
 
-                    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400"> <b>Nro. Cuenta:</b> {{account.accountNumber}}
+                    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400"> <b>Nro. Cuenta:</b> {{account.codeInternalAccount}}
                     </p>
                     <p class="mb-3 font-normal text-gray-500 dark:text-gray-400"> <b>Saldo antes del movimiento:</b> $
-                        {{account.accountBalance}} USD</p>
+                        {{account.availableBalance}} USD</p>
                     <p class="mb-3 font-normal text-gray-500 dark:text-gray-400"> <b>Saldo después del movimiento: </b>
                         $ {{accountBalanceAfterTransaction.toFixed(2)}} USD </p>
                 </div>
@@ -41,10 +42,8 @@
 
                     <p class="mb-3 font-normal text-gray-500 dark:text-gray-400"> <b>Nombre del Propietario:</b>
                         AHO497923232332</p>
-                    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400"> <b>Identificación:</b> CED 1719053672
+                    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400"> <b>Nro. Cuenta:</b> 60419053672
                     </p>
-                    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400"> <b>Correo electrónico: </b>
-                        user@gmail.com </p>
                 </div>
             </div>
 

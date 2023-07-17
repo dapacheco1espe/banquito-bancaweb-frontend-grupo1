@@ -7,10 +7,12 @@ import { Account } from '../Models/Account';
 })
 export class AccountOperationsDataShareService {
   private _account:BehaviorSubject<Account> = new BehaviorSubject<Account>({
-    accountTypeId: '',
-    accountType: '',
-    accountBalance: 0,
-    accountNumber: ''
+    id: 0,
+    name:'',
+    maxOverdraft: 0,
+    codeInternalAccount: '',
+    availableBalance: 0,
+    totalBalance: 0,
   });
   constructor() { }
 

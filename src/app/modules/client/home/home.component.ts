@@ -33,8 +33,10 @@ export class HomeComponent implements OnInit {
 
     public getAccount() {
         this.account.getUserAccounts(1).subscribe({
+            
             next: (response) => {
                 this.acc = response;
+                
             },
         });
     }
@@ -43,7 +45,7 @@ export class HomeComponent implements OnInit {
         this.loan.getLoan().subscribe({
             next: (response) => {
                 this.loa = response;
-                console.log(this.acc);
+                
             },
         });
     }

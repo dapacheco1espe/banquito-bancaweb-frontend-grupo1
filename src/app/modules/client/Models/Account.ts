@@ -1,6 +1,8 @@
 export interface Account{
-    accountTypeId:string,
-    accountType:string,
-    accountNumber:string,
-    accountBalance:number,
+    id: number,
+    name:string,
+    maxOverdraft: number,
+    codeInternalAccount: string,
+    availableBalance: number,
+    totalBalance: number,
 }

@@ -26,6 +26,7 @@ export class AccountComponent implements OnInit {
 
     isPopupOpen = false;
     showSuccess = false;
+    showFailed = false;
     openPopup() {
       this.isPopupOpen = true;
     }
@@ -34,20 +35,24 @@ export class AccountComponent implements OnInit {
       this.isPopupOpen = false;
     }
 
-    showSuccessMessage(cuenta: string) {
+    showSuccessMessage() {
       this.showSuccess = true;
       setTimeout(() => {
         this.closePopupAndReset();
       }, 3000);
     }
-  
-    closeSuccessMessage() {
-      this.showSuccess = false;
+
+    showErrorMessage() {
+      this.showFailed = true;
+      setTimeout(() => {
+        this.closePopupAndReset();
+      }, 3000);
     }
 
     closePopupAndReset() {
       this.isPopupOpen = false;
       this.showSuccess = false;
+      this.showFailed = false;
     }
 
     stopPropagation(event: Event) {
@@ -60,6 +65,18 @@ export class AccountComponent implements OnInit {
         
       } )
     }
+
+    public createAccount(customerId: number, accountType: string): void {
+      this._accountService.createAccount(customerId,accountType).subscribe(
+        response => {
+          this.showSuccessMessage();
+        },
+        error => {
+          this.showErrorMessage();
+        }
+      );
+    }
+    
 
   public goToOperationsBoard(account:Account){
     this._accountOperationsDataShareService.account = account;
