@@ -13,10 +13,14 @@ import { AccountTransactionService } from './services/account-transaction.servic
 export class AccountTransactionComponent implements OnInit {
 
   public account:Account;
-  public accountBalanceAfterTransaction:Number = 0;
+  public accountBalanceAfterTransaction:number = 0;
   public accountNumber: string = '';
-  public accountDestination :Account;
-
+  public accountDestination :AccountDestination;
+  public isInputEmpty: boolean = true;
+  public errorMessage: string = '';
+  public isAccountNumberValid: boolean = true;
+  public isAccountInfoAvailable: boolean = false;
+  public showErrorPopup: boolean = false;
   
   constructor(private _accountOperationDataShareService:AccountOperationsDataShareService,
     private accountTransactionService: AccountTransactionService) { }
@@ -31,19 +35,47 @@ export class AccountTransactionComponent implements OnInit {
     });
   }
 
-  public validateAccount(){
-    console.log(this.accountNumber);
+  onInputChange() {
+    this.isInputEmpty = this.accountNumber.trim().length === 0;
+    this.isAccountNumberValid = this.accountNumber.length === 8;
+    this.errorMessage = '';
+  }
 
+  private openErrorPopup() {
+    this.showErrorPopup = true;
+  }
+
+  public closeErrorPopup() {
+    this.showErrorPopup = false;
+  }
+
+  public validateAccount(){
+    if (this.isInputEmpty) {
+      this.errorMessage = 'Escriba el número de cuenta';
+    } 
+    else if (this.accountNumber.length !== 8) {
+      this.errorMessage = 'Número inválido. Debe tener 8 dígitos';
+    }
+    else if (this.accountNumber === this.account.codeInternalAccount) {
+      this.errorMessage = 'No se puede transferir a la cuenta de origen';
+    }
+    else {
     this.accountTransactionService.getAccountByCodeInternal(this.accountNumber).subscribe(
-      (response) => {
-        this.accountDestination = response;
-        console.log(this.accountDestination)
-      },
+      
+        (accountD: AccountDestination | undefined) => {
+          this.accountDestination = accountD;
+          if (accountD === undefined) {
+            this.errorMessage = 'Cuenta no encontrada';
+          }
+          else{
+            this.isAccountInfoAvailable = true;
+          }
+        },
       (error) => {
-        console.error('Error al obtener la cuenta:', error);
+        this.errorMessage = 'Error al obtener la cuenta';
       }
     );
-
+  }
   }
   
   public calculateBalance(event:Event){
@@ -51,6 +83,11 @@ export class AccountTransactionComponent implements OnInit {
     input.value = input.value == '' || parseFloat(input.value)<0 ? '0' :input.value;
     const total = this.account.availableBalance - parseFloat(input.value);
     this.accountBalanceAfterTransaction = total < 0 ? 0 :total ;
+    this.isAccountInfoAvailable = this.accountBalanceAfterTransaction > 0;
+    if (this.accountBalanceAfterTransaction <= 0) {
+      this.openErrorPopup();
+      return;
+    }
   }
 
   

@@ -1,18 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { AccountDestination } from '../../Models/AccountDestination';
 @Injectable({
   providedIn: 'root'
 })
 export class AccountTransactionService {
 
-  private urlApi='https://64b14cc3062767bc4825fe08.mockapi.io/api/v1/account';
-  
+  private urlApi='http://localhost:9003/api/v1/accounts/account-internalcode';
+
+
   constructor(private _http:HttpClient) { }
 
   
-  public getAccountByCodeInternal(codeInternal: string): Observable<any> {
-    const urlWithParams = `${this.urlApi}?codeInternalAccount=${codeInternal}`;
-    return this._http.get(urlWithParams);
+  public getAccountByCodeInternal(internalAccountCode: string): Observable<AccountDestination> {
+    const urlWithParams = `${this.urlApi}/${internalAccountCode}`;
+    return this._http.get<AccountDestination>(urlWithParams);
   }
 }

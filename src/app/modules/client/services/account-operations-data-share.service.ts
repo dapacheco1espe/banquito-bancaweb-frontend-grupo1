@@ -9,6 +9,7 @@ export class AccountOperationsDataShareService {
   private _account:BehaviorSubject<Account> = new BehaviorSubject<Account>({
     id: 0,
     name:'',
+    clientUk:'',
     maxOverdraft: 0,
     codeInternalAccount: '',
     availableBalance: 0,

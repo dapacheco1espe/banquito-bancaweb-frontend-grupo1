@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { AccountOperationsDataShareService } from '../services/account-operations-data-share.service';
 import { Account } from '../Models/Account';
+import { ClientDataShareService } from '../services/client-data-share.service';
 
 @Component({
   selector: 'app-account',
@@ -16,12 +17,18 @@ export class AccountComponent implements OnInit {
 
 
   constructor(private _accountService:AccountService, private _changeDetector:ChangeDetectorRef,
-    private _router:Router, private _accountOperationsDataShareService:AccountOperationsDataShareService) { }
+    private _router:Router, private _accountOperationsDataShareService:AccountOperationsDataShareService,
+    private clientService: ClientDataShareService) { }
   public accounts$:Observable<any>;
+
+  
+
   ngOnInit(): void {
     this.accounts$ = this._accountService.accounts$;
     this._changeDetector.markForCheck();
     this.obtainProductAccount();
+
+    
   }
 
     isPopupOpen = false;
@@ -66,8 +73,8 @@ export class AccountComponent implements OnInit {
       } )
     }
 
-    public createAccount(customerId: number, accountType: string): void {
-      this._accountService.createAccount(customerId,accountType).subscribe(
+    public createAccount(accountType: string): void {
+      this._accountService.createAccount(this.clientService.getClientUk(),accountType).subscribe(
         response => {
           this.showSuccessMessage();
         },
@@ -82,4 +89,6 @@ export class AccountComponent implements OnInit {
     this._accountOperationsDataShareService.account = account;
     this._router.navigateByUrl('/client/account-operations');
   }
+
+  
 }

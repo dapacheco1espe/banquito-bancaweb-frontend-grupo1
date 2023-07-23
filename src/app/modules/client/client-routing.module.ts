@@ -50,6 +50,21 @@ const routes: Routes = [
     path: 'loan-amortization',
     loadChildren: () => import('app/modules/client/loan-amortization/loan-amortization.module') .then(m => m.LoanAmortizationModule),
   }
+  ,
+  {
+    path: 'loan-operations',
+    loadChildren: () => import('app/modules/client/loan-operations/loan-operations.module') .then(m => m.LoanOperationsModule),
+  }
+  ,
+  {
+    path: 'loan-payment',
+    loadChildren: () => import('app/modules/client/loan-payment/loan-payment.module') .then(m => m.LoanPaymentModule),
+  }
+  ,
+  {
+    path: 'loan-history',
+    loadChildren: () => import('app/modules/client/loan-history/loan-history.module') .then(m => m.LoanHistoryModule),
+  }
   
 ];
 
