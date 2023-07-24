@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
+import { ClientDataShareService } from 'app/modules/client/services/client-data-share.service';
 
 @Component({
     selector     : 'auth-sign-in',
@@ -29,7 +30,8 @@ export class AuthSignInComponent implements OnInit
         private _activatedRoute: ActivatedRoute,
         private _authService: AuthService,
         private _formBuilder: FormBuilder,
-        private _router: Router
+        private _router: Router,
+        private clientService: ClientDataShareService
     )
     {
     }
@@ -85,6 +87,8 @@ export class AuthSignInComponent implements OnInit
 
                     // Navigate to the redirect url
                     this._router.navigateByUrl(redirectURL);
+                    const clientUk = '46c36f57-5370-4f88-9232-42616a2a348d';
+                    this.clientService.setClientUk(clientUk);
 
                 },
                 (response) => {
