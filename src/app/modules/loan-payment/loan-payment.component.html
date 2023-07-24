@@ -1,0 +1,64 @@
+<!-- Agregamos las clases de Tailwind CSS para centrar la sección y ocupar toda la pantalla -->
+<div class="min-h-screen flex items-center justify-center bg-gray-100 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full">
+      <div class="relative px-4 py-10 bg-white mx-8 md:mx-0 shadow rounded-3xl sm:p-10">
+        <div class="max-w-md mx-auto">
+            <div class="flex items-center space-x-5">
+                <div class="block pl-2 font-semibold text-xl self-start text-gray-700">
+                  <h2 class="leading-relaxed">Pago Préstamo {{ loan.code}}</h2>
+                </div>
+              </div>
+          <div class="divide-y divide-gray-200">
+            <div class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
+                <div class="flex flex-col">
+                    <label class="leading-loose">Fecha de Próximo Pago</label>
+                    <p>{{ loan.nextPaymentDate | date }}</p>
+                  </div>
+                  <div class="flex flex-col">
+                    <label class="leading-loose">Monto del Próximo Pago</label>
+                    <p>{{ loan.nextPayment | currency:'USD':'symbol' }}</p>
+                  </div>
+            </div>
+            <ng-container *ngIf="(accounts$ | async) as accounts">
+                <div class="mt-4">
+                  <label class="block text-lg font-bold mb-2" for="selectAccount">Selecciona una cuenta:</label>
+                  <select id="selectAccount" [(ngModel)]="selectedAccount" class="w-full border border-gray-300 px-4 py-2 rounded">
+                    <option *ngFor="let account of accounts" [value]="account.uniqueKey">{{ account.name }}</option>
+                  </select>
+                </div>
+              </ng-container>
+              
+            <div class="pt-4 flex items-center space-x-4">
+              
+              <button
+                (click)="payTotal()"
+                class="bg-blue-500 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none"
+              >
+                Pagar
+              </button>
+              <p *ngIf="errorMessage" class="text-red-500 mt-2">{{ errorMessage }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  <!-- Agregamos el popup para mostrar el mensaje de éxito -->
+  <div
+    *ngIf="showSuccessPopup"
+    class="fixed inset-0 flex items-center justify-center backdrop-filter backdrop-blur bg-opacity-75 bg-gray-900"
+  >
+    <div class="bg-white rounded-lg p-6 shadow-lg">
+      <p class="text-xl font-bold text-green-500">Pago realizado con éxito</p>
+      <p class="mt-2">¡El pago se ha realizado con éxito!</p>
+      <div class="mt-4 flex justify-end">
+        <button
+          (click)="closePopup()"
+          class="text-sm text-blue-500 hover:underline focus:outline-none"
+        >
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
