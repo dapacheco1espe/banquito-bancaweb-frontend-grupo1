@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Account } from '../Models/Account';
 import { AccountDestination } from '../Models/AccountDestination';
 import { AccountTransactionService } from './services/account-transaction.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-account-transaction',
@@ -15,6 +16,7 @@ export class AccountTransactionComponent implements OnInit {
   public account:Account;
   public accountBalanceAfterTransaction:number = 0;
   public accountNumber: string = '';
+  public ammount: number = 0;
   public accountDestination :AccountDestination;
   public isInputEmpty: boolean = true;
   public errorMessage: string = '';
@@ -23,7 +25,8 @@ export class AccountTransactionComponent implements OnInit {
   public showErrorPopup: boolean = false;
   
   constructor(private _accountOperationDataShareService:AccountOperationsDataShareService,
-    private accountTransactionService: AccountTransactionService) { }
+    private accountTransactionService: AccountTransactionService,
+    private router: Router) { }
 
   ngOnInit(): void {
     
@@ -34,6 +37,9 @@ export class AccountTransactionComponent implements OnInit {
       }
     });
   }
+  showSuccess = false;
+  showFailed = false;
+  isPopupOpen = false;
 
   onInputChange() {
     this.isInputEmpty = this.accountNumber.trim().length === 0;
@@ -90,7 +96,38 @@ export class AccountTransactionComponent implements OnInit {
     }
   }
 
-  
+  showSuccessMessage() {
+    this.showSuccess = true;
+    setTimeout(() => {
+      this.closePopupAndReset();
+      this.router.navigate(['/']);
+    }, 3000);
+  }
+
+  showErrorMessage() {
+    this.showFailed = true;
+    setTimeout(() => {
+      this.closePopupAndReset();
+    }, 3000);
+  }
+
+  closePopupAndReset() {
+    this.isPopupOpen = false;
+    this.showSuccess = false;
+    this.showFailed = false;
+  }
+
+  public createTransfer( creditorAccount: string,debtorAccount: string,notes: string): void {
+    this.accountTransactionService.createTransacctionAccount(this.ammount,creditorAccount,debtorAccount,notes).subscribe(
+      response => {
+        //console.log(this.ammount);
+        this.showSuccessMessage();
+      },
+      error => {
+        this.showErrorMessage();
+      }
+    );
+  }
 
 
 }
