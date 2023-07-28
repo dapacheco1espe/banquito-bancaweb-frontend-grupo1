@@ -13,9 +13,16 @@ export class AccountOperationsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public goToDefinedOperation(operation: 'transferencia'| 'historial'):void{
-    operation === 'transferencia' ? this._router.navigateByUrl('/client/account-transactions') : this._router.navigateByUrl('/client/account-history');
+  public goToDefinedOperation(operation: 'transferencia' | 'historial' | 'configuracion'): void {
+    if (operation === 'transferencia') {
+      this._router.navigateByUrl('/client/account-transactions');
+    } else if (operation === 'historial') {
+      this._router.navigateByUrl('/client/account-history');
+    } else if (operation === 'configuracion') {
+      this._router.navigateByUrl('/client/account-setting');
+    }
   }
+  
 
 
 }

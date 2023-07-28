@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
 import { AccountService } from './services/account.service';
-import { UserService } from 'app/core/user/user.service';
-import { User } from 'app/core/user/user.types';
+import { ClientDataShareService } from '../services/client-data-share.service';
 
 @Injectable({
     providedIn: 'root'
@@ -13,17 +12,14 @@ export class AccountsResolver implements Resolve<any>
     /**
      * Constructor
      */
-    private _customerId:any = 0;
+    private _customerUK:string = '';
     constructor(
         private _accountService:AccountService,
-        private _userService:UserService,
+        private _clientService: ClientDataShareService,
     )
     {
-        this._userService.user$.subscribe({
-            next:(user:User)=>{
-                this._customerId = user.id;
-            }
-        });
+        this._customerUK = this._clientService.getClientUk()
+        
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -40,7 +36,7 @@ export class AccountsResolver implements Resolve<any>
     {
         // Fork join multiple API endpoint calls to wait all of them to finish
         return forkJoin([
-            this._accountService.getUserAccounts(this._customerId),
+            this._accountService.getUserAccounts(this._customerUK),
         ]);
     }
 }
