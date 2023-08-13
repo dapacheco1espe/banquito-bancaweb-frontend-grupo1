@@ -29,9 +29,7 @@ export class HomeComponent implements OnInit {
     ngOnInit(): void {
         this.getAccount();
         this.getLoan();
-
-        const clientUk = '46c36f57-5370-4f88-9232-42616a2a348d';
-        this.clientService.setClientUk(clientUk);
+        
     }
 
     public navigateToPages(page: 'account' | 'account-transactions' | 'loan' | 'loan-operations' ) {

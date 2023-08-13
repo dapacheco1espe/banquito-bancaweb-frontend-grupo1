@@ -11,8 +11,8 @@ export class AccountService {
   
   private _accounts:BehaviorSubject<Account[]> = new BehaviorSubject<Account[]>([]);
 
-  //private urlApi='http://localhost:9003/api/v1/accounts';
-  private urlApi='http://localhost:9003/api/v1/accounts/accounts-client';
+  
+  private urlApi='http://localhost:9003/api/v1/accounts';
   //private urlApi='https://64b14cc3062767bc4825fe08.mockapi.io/api/v1/account';
   
   private urlProductApi='https://64b14cc3062767bc4825fe08.mockapi.io/api/v1/productAccount';
@@ -28,8 +28,7 @@ export class AccountService {
   }
   
   public getUserAccounts(customerUK: String): Observable<any> {
-    console.log(customerUK);
-    const urlWithParams = `${this.urlApi}/${customerUK}`; 
+    const urlWithParams = `${this.urlApi}/accounts-client/${customerUK}`; 
     return this._http.get(urlWithParams).pipe(
       tap(response => {
         this._accounts.next(response);
@@ -37,8 +36,8 @@ export class AccountService {
     );
   }
 
-  public getAccount(id: number): Observable<any> {
-    const urlWithParams = `${this.urlApi}/${id}`; 
+  public getAccount(accountUK: String): Observable<any> {
+    const urlWithParams = `${this.urlApi}/account/${accountUK}`; 
     return this._http.get(urlWithParams).pipe(
       tap(response => {
         this._accounts.next(response);
