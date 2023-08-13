@@ -36,11 +36,11 @@ export const compactNavigation: FuseNavigationItem[] = [
             },
             {
                 id      : 'payments',
-                title   : 'Prestamos',
-                tooltip : 'Prestamos',
+                title   : 'Pagos',
+                tooltip : 'Pagos',
                 type    : 'basic',
                 icon    : 'heroicons_outline:currency-dollar',
-                link    : '/client/loan'
+                //link    : '/account-operations'
             },
             // {
             //     id      : 'history',

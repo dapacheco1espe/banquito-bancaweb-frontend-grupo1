@@ -81,37 +81,9 @@
   
     <div *ngIf="showPopup" class="fixed inset-0 flex items-center justify-center">
       <div class="bg-white rounded-lg p-8">
-        <div class="flex items-center justify-between mb-4">
-          <div class="bg-green-500 text-white rounded-full flex items-center justify-center w-8 h-8 mr-2">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-          </div>
-          <p class="text-green-500 font-bold text-lg">Solicitud exitosa</p>
-        </div>
-        <p class="mb-2">Donde desea que sea depositado el dinero:</p>
-        <ng-container *ngIf="(accounts$ | async) as accounts">
-        <select class="mt-2 p-2 border rounded">
-          <option *ngFor="let account of accounts" [value]="account.uniqueKey">{{ account.name }}</option>
-        </select>
-      </ng-container>
-        <div class="border-t mt-4 pt-4">
-          <button (click)="depositarCuenta()" class="px-4 py-2 bg-green-500 text-white rounded">Aceptar</button>
-        </div>
+        <p>Solicitud exitosa</p>
       </div>
     </div>
-    
-    <div *ngIf="showPopupS" class="fixed inset-0 flex items-center justify-center">
-      <div class="bg-white rounded-lg p-8">
-        <div class="flex items-center justify-between mb-4">
-          
-          <p class="text-green-500 font-bold text-lg">Transacción exitosa</p>
-        </div>
-        
-      </div>
-    </div>
-    
-    
   </div>
   
 

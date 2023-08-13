@@ -1,6 +1,5 @@
 export interface Account{
     id: number,
-    uniqueKey: string,
     name:string,
     clientUk: string,
     maxOverdraft: number,

@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { Loan } from '../Models/Loan';
 import { AccountService } from '../account/services/account.service';
 import { Account } from '../Models/Account';
-import { Router } from '@angular/router';
 @Component({
   selector: 'app-loan-payment',
   templateUrl: './loan-payment.component.html',
@@ -12,14 +11,13 @@ import { Router } from '@angular/router';
 })
 export class LoanPaymentComponent implements OnInit {
 
-  constructor(private _accountService:AccountService,private _loanOperationDataShareService: LoanOperationsDataShareService,
-    private router: Router) { }
+  constructor(private _accountService:AccountService,private _loanOperationDataShareService: LoanOperationsDataShareService) { }
 
   public montoAPagar: number=0;
   public loan: Loan;
   public showSuccessPopup: boolean = false;
   public accounts$:Observable<any>;
-  public selectedAccount: string | null = null;
+  public selectedAccount: number | null = null;
   public errorMessage: string = '';
   
   ngOnInit(): void {
@@ -33,24 +31,24 @@ export class LoanPaymentComponent implements OnInit {
 
  
 
-   payTotal() {
-    if (this.selectedAccount === null ) {
+  payTotal() {
+    console.log(this.montoAPagar);
+    console.log(this.selectedAccount);
+    if (this.montoAPagar === null || this.selectedAccount === null || this.montoAPagar=== undefined) {
       this.errorMessage = 'Selecciona una cuenta y el monto a pagar';
       this.showSuccessPopup = false;
-      
       return;
     }
 
-    //const selectedAccount: Account = await this._accountService.getAccount(this.selectedAccount).toPromise();
-    //console.log(selectedAccount);
-    /*
+    /*const selectedAccount: Account = await this._accountService.getAccount(this.selectedAccount).toPromise();
+    
     if (!selectedAccount || selectedAccount=== undefined) {
       this.errorMessage = 'Cuenta no encontrada';
       this.showSuccessPopup = false;
       return;
     }
     console.log(selectedAccount.availableBalance);
-    if (this.loan.nextPayment > selectedAccount.availableBalance) {
+    if (this.montoAPagar > selectedAccount.availableBalance) {
       this.errorMessage = 'No cuentas con fondos suficientes para realizar el pago';
       this.showSuccessPopup = false;
       return;
@@ -62,9 +60,7 @@ export class LoanPaymentComponent implements OnInit {
 
     setTimeout(() => {
       this.showSuccessPopup = false;
-      this.router.navigate(['/']);
     }, 3000);
-
     this.errorMessage = '';
   }
 

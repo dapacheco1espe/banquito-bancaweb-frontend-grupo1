@@ -23,13 +23,18 @@
                 <div class="mt-4">
                   <label class="block text-lg font-bold mb-2" for="selectAccount">Selecciona una cuenta:</label>
                   <select id="selectAccount" [(ngModel)]="selectedAccount" class="w-full border border-gray-300 px-4 py-2 rounded">
-                    <option *ngFor="let account of accounts" [value]="account.uniqueKey">{{ account.name }}</option>
+                    <option *ngFor="let account of accounts" [value]="account.id">{{ account.name }}</option>
                   </select>
                 </div>
               </ng-container>
               
             <div class="pt-4 flex items-center space-x-4">
-              
+              <input
+                [(ngModel)]="montoAPagar"
+                class="w-full border border-gray-300 px-4 py-2 rounded"
+                placeholder="Monto a pagar"
+                type="number"
+              />
               <button
                 (click)="payTotal()"
                 class="bg-blue-500 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none"
