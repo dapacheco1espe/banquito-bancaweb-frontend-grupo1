@@ -1,17 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountSettingService {
-  private urlApi='https://64b14cc3062767bc4825fe08.mockapi.io/api/v1/account';
+  private urlApi='http://localhost:9003/api/v1/accounts';
 
   constructor(private _http:HttpClient) { }
-  public updateMaxOverdraft(accountId: number, maxOverdraft: number): Observable<any> {
-    const url = `${this.urlApi}/${accountId}`;
+  
+  
+  public updateMaxOverdraft(accountUk: string, maxOverdraft: number): Observable<any> {
+    const url = `${this.urlApi}/account/${accountUk}`;
   
     const accountData = {
       maxOverdraft: maxOverdraft
@@ -19,8 +21,13 @@ export class AccountSettingService {
   
     return this._http.put(url, accountData).pipe(
       tap(response => {
-        
+        console.log("Successful PUT request:", response);
+      }),
+      catchError(error => {
+        console.error("Error in PUT request:", error);
+        throw error;
       })
     );
   }
+  
 }

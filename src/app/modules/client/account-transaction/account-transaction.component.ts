@@ -17,6 +17,7 @@ export class AccountTransactionComponent implements OnInit {
   public accountBalanceAfterTransaction:number = 0;
   public accountNumber: string = '';
   public ammount: number = 0;
+  public notes: string = '';
   public accountDestination :AccountDestination;
   public isInputEmpty: boolean = true;
   public errorMessage: string = '';
@@ -117,10 +118,9 @@ export class AccountTransactionComponent implements OnInit {
     this.showFailed = false;
   }
 
-  public createTransfer( creditorAccount: string,debtorAccount: string,notes: string): void {
-    this.accountTransactionService.createTransacctionAccount(this.ammount,creditorAccount,debtorAccount,notes).subscribe(
+  public createTransfer( creditorAccount: string,debtorAccount: string): void {
+    this.accountTransactionService.createTransacctionAccount(this.ammount,creditorAccount,debtorAccount,this.notes).subscribe(
       response => {
-        //console.log(this.ammount);
         this.showSuccessMessage();
       },
       error => {

@@ -4,6 +4,7 @@ export interface AccountTransaction{
     transactionType:string,
     reference: string,
     ammount: number,
+    balanceAfterTransaction: number,
     creditorBankCode: string,
     creditorAccount: string,
     debtorBankCode: string,

@@ -37,7 +37,7 @@
           <td class="border py-2 px-4 text-center">{{ trans.reference }}</td>
           <td class="border py-2 px-4 text-center">{{getTransactionTypeTranslation(trans.transactionType)}}</td>
           <td class="border py-2 px-4 text-right">{{ trans.ammount | currency }}</td>
-          <td class="border py-2 px-4 text-right"></td>
+          <td class="border py-2 px-4 text-right">{{ trans.balanceAfterTransaction | currency }}</td>
         </tr>
       </tbody>
     </table>
