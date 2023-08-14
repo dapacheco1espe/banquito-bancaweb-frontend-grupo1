@@ -21,31 +21,28 @@
           </div>
         </div>
       
-        <table class="mt-8 w-full">
+        <table class="mt-8 w-full" *ngIf="transaction && transaction.length > 0 ; else noTransactions">
           <thead>
             <tr>
               <th class="bg-gray-200 text-left py-2 px-4">Fecha</th>
-              <th class="bg-gray-200 text-left py-2 px-4">Documento</th>
-              <th class="bg-gray-200 text-left py-2 px-4">Tipo de Transacción</th>
+              <th class="bg-gray-200 text-center py-2 px-4">Estado</th>
               <th class="bg-gray-200 text-right py-2 px-4">Monto</th>
+              <th class="bg-gray-200 text-center py-2 px-4">Saldo Restante</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td class="border py-2 px-4">2023-07-12</td>
-              <td class="border py-2 px-4">DOC001</td>
-              <td class="border py-2 px-4">Debito</td>
-              <td class="border py-2 px-4 text-right">$100.00</td>
+            <tr *ngFor="let trans of transaction">
+              <td class="border py-2 px-4">{{ trans.dueDate | date: 'dd/MM/yyyy' }}</td>
+              <td class="border py-2 px-4 text-center">{{ trans.reference }}</td>
+              <td class="border py-2 px-4 text-center">{{trans.state}}</td>
+              <td class="border py-2 px-4 text-right">{{ trans.principalPaid | currency }}</td>
+              <td class="border py-2 px-4 text-right">{{ trans.principalDue | currency }}</td>
             </tr>
-            <tr>
-              <td class="border py-2 px-4">2023-07-11</td>
-              <td class="border py-2 px-4">DOC002</td>
-              <td class="border py-2 px-4">Credito</td>
-              <td class="border py-2 px-4 text-right">$200.00</td>
-            </tr>
-            
           </tbody>
         </table>
+        <ng-template #noTransactions>
+          <p>No hay transacciones disponibles.</p>
+        </ng-template>
       </div>
       
     </div>

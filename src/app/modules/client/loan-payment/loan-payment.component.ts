@@ -5,6 +5,7 @@ import { Loan } from '../Models/Loan';
 import { AccountService } from '../account/services/account.service';
 import { Account } from '../Models/Account';
 import { Router } from '@angular/router';
+import { LoanPaymentService } from './services/loan-payment.service';
 @Component({
   selector: 'app-loan-payment',
   templateUrl: './loan-payment.component.html',
@@ -13,6 +14,7 @@ import { Router } from '@angular/router';
 export class LoanPaymentComponent implements OnInit {
 
   constructor(private _accountService:AccountService,private _loanOperationDataShareService: LoanOperationsDataShareService,
+    private loanPaymentService: LoanPaymentService,
     private router: Router) { }
 
   public montoAPagar: number=0;
@@ -33,7 +35,7 @@ export class LoanPaymentComponent implements OnInit {
 
  
 
-   payTotal() {
+   async payTotal() {
     if (this.selectedAccount === null ) {
       this.errorMessage = 'Selecciona una cuenta y el monto a pagar';
       this.showSuccessPopup = false;
@@ -41,7 +43,7 @@ export class LoanPaymentComponent implements OnInit {
       return;
     }
 
-    //const selectedAccount: Account = await this._accountService.getAccount(this.selectedAccount).toPromise();
+    const selectedAccount: Account = await this._accountService.getAccount(this.selectedAccount).toPromise();
     //console.log(selectedAccount);
     /*
     if (!selectedAccount || selectedAccount=== undefined) {
@@ -57,7 +59,7 @@ export class LoanPaymentComponent implements OnInit {
     }
     */
 
-    //this.performPayment();
+    this.createPayment(selectedAccount.id,"",1,this.montoAPagar);
     this.showSuccessPopup = true;
 
     setTimeout(() => {
@@ -68,11 +70,22 @@ export class LoanPaymentComponent implements OnInit {
     this.errorMessage = '';
   }
 
-  // Método para cerrar el popup de éxito
+  
   closePopup() {
     this.showSuccessPopup = false;
   }
 
+
+  public createPayment(accountId: number,amortizationUuid: String,branchId: number, amountToPay: number): void {
+    this.loanPaymentService.createPaymentLoan(accountId,amortizationUuid,branchId,amountToPay).subscribe(
+      response => {
+        this.showSuccessPopup = true;
+      },
+      error => {
+        this.showSuccessPopup = false;
+      }
+    );
+  }
 
 
 }
