@@ -41,7 +41,7 @@
     <h2 class="text-lg font-bold mb-4">¿Qué tipo de cuenta deseas?</h2>
     <div class="grid grid-cols-3 gap-4">
       <ng-container *ngFor="let itemProductoAccount of dataProductAccount"> 
-      <div class="bg-gray-200 p-4 rounded" (click)="createAccount(1, itemProductoAccount.name)">
+      <div class="bg-gray-200 p-4 rounded" (click)="createAccount(itemProductoAccount.id)">
         <h3 class="text-lg text-center font-bold mb-2"> {{itemProductoAccount.name}}</h3>
       </div>
     </ng-container>

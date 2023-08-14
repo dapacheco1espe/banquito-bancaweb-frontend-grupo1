@@ -47,21 +47,28 @@ export class AccountService {
 
  
   
-  public createAccount(customerId: String, accountType: string): Observable<any> {
+  public createAccount(clientUk: String, productUk: string): Observable<any> {
     const accountData = {
-      clientId: customerId,
-      productAccount: {
-        name: accountType
-      },
-      availableBalance: 0,
+      clientUk: clientUk,
+      uniqueKey: '',
+      codeInternalAccount: Math.floor(Math.random() * 90000000) + 10000000,
+      name: '',
       totalBalance: 0,
+      availableBalance: 0,
+      blockedBalance: 0,
+      allowOverdraft: true,
+      productUk: productUk,
       maxOverdraft: 400,
-      codeInternalAccount: Math.floor(Math.random() * 9000000000) + 1000000000,
+      accountHolderCode:'',
+      accountHolderType: 'CUS',
+      codeInternationalAccount: '',
+      state: 'ACT',
+      interestRate: 0,
     };
 
     return this._http.post(this.urlApi, accountData).pipe(
       tap(response => {
-        this.getUserAccounts(customerId).subscribe();
+        this.getUserAccounts(clientUk).subscribe();
       })
     );
   }
