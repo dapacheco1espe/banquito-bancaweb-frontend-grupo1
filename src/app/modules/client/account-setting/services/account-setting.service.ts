@@ -15,19 +15,14 @@ export class AccountSettingService {
   
   
   public updateMaxOverdraft(accountUk: string, maxOverdraft: number): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': 'http://localhost:4200', // Ajusta esto según tu frontend
-      // Agrega otras cabeceras necesarias aquí
-    });
-    const options = { headers: headers };
+    
     const url = `${this.urlApi}/account/${accountUk}`;
   
     const accountData = {
       maxOverdraft: maxOverdraft
     };
   
-    return this._http.put(url, accountData, options).pipe(
+    return this._http.put(url, accountData).pipe(
       tap(response => {
         console.log("Successful PUT request:", response);
       }),

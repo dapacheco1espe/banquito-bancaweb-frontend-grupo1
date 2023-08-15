@@ -51,7 +51,7 @@ export class AccountService {
     const accountData = {
       clientUk: clientUk,
       uniqueKey: '',
-      codeInternalAccount: Math.floor(Math.random() * 90000000) + 10000000,
+      codeInternalAccount: '',
       name: '',
       totalBalance: 0,
       availableBalance: 0,
