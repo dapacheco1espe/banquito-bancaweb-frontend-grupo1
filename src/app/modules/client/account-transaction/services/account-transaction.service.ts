@@ -3,15 +3,18 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AccountDestination } from '../../Models/AccountDestination';
+import { environment } from 'environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class AccountTransactionService {
 
-  private urlApi='http://localhost:9003/api/v1/accounts';
+  private urlApi='';
 
 
-  constructor(private _http:HttpClient) { }
+  constructor(private _http:HttpClient) {
+    this.urlApi=environment.urlApiAccount;
+   }
 
   
   public getAccountByCodeInternal(internalAccountCode: string): Observable<AccountDestination> {

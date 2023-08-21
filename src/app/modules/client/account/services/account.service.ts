@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Account } from '../../Models/Account';
 import { tap } from 'rxjs/operators';
+import { environment } from 'environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +13,13 @@ export class AccountService {
   private _accounts:BehaviorSubject<Account[]> = new BehaviorSubject<Account[]>([]);
 
   
-  private urlApi='http://localhost:9003/api/v1/accounts';
-  //private urlApi='https://64b14cc3062767bc4825fe08.mockapi.io/api/v1/account';
+  private urlApi='';
   
-  private urlProductApi='https://64b14cc3062767bc4825fe08.mockapi.io/api/v1/productAccount';
+  private urlProductApi='';
   constructor(private _http:HttpClient) {
     
-    
+    this.urlApi=environment.urlApiAccount
+    this.urlProductApi=environment.urlApiAccountProduct
     
   }
 

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -8,12 +9,14 @@ import { map } from 'rxjs/operators';
 })
 export class LoanPaymentService {
 
-  private urlApi='http://localhost:9003/api/v1/repayment';
+  private urlApi='';
 
 
   constructor(
     private _http:HttpClient
-  ) { }
+  ) {
+    this.urlApi=environment.urlApiLoanRepayment;
+   }
 
 
   public createPaymentLoan(accountId: number,amortizationUuid: String,branchId: number, amountToPay: number ): Observable<any> {

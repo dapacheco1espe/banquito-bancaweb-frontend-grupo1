@@ -43,8 +43,8 @@ export class AccountSettingComponent implements OnInit {
     this.showFailed = false;
   }
 
-  public updateMaxOverdraft(accountUk: string, maxOverdraft: number): void {
-    this._accountSettingService.updateMaxOverdraft(accountUk,maxOverdraft).subscribe(
+  public updateMaxOverdraft(): void {
+    this._accountSettingService.updateMaxOverdraft(this.account.uniqueKey, this.maxOverdraft).subscribe(
       response => {
         this.showSuccessMessage();
       },
@@ -53,4 +53,5 @@ export class AccountSettingComponent implements OnInit {
       }
     );
   }
+  
 }
