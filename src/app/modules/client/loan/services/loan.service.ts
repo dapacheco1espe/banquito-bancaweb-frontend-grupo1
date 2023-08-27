@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Loan } from '../../Models/Loan';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { environment } from 'environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,11 +12,13 @@ export class LoanService {
 
   private _loans:BehaviorSubject<Loan[]> = new BehaviorSubject<Loan[]>([]);
 
-  private urlApi='http://localhost:9003/api/v2/loans';
+  private urlApi='';
 
   constructor(
     private _http:HttpClient
-  ) { }
+  ) { 
+    this.urlApi=environment.urlApiLoan
+  }
 
   get loans$():Observable<Loan[]>{
 

@@ -36,6 +36,7 @@ export class HomeComponent implements OnInit {
         this.router.navigateByUrl(`/client/${page}`);
     }
 
+    /*
     public getAccount() {
         const clientUk = '46c36f57-5370-4f88-9232-42616a2a348d';
         this.clientService.setClientUk(clientUk);
@@ -45,6 +46,25 @@ export class HomeComponent implements OnInit {
             },
         });
     }
+    */
+
+     
+    public getAccount() {
+    const clientUk = '46c36f57-5370-4f88-9232-42616a2a348d';
+    this.clientService.setClientUk(clientUk);
+    
+    this.account.getUserAccounts(clientUk).subscribe({
+        next: async (response) => {
+            for (const acc of response) {
+                acc.tipoCuenta = await this.account.getTypeOfAccount(acc.productUk);
+            }
+            this.acc = response;
+        },
+    });
+}
+
+    
+   
 
     public getLoan() {
         this.loan.getLoan().subscribe({

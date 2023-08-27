@@ -1,5 +1,6 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
@@ -7,35 +8,30 @@ import { catchError, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AccountSettingService {
-  private urlApi='http://localhost:9003/api/v1/accounts';
+  private urlApi='';
 
   
 
-  constructor(private _http:HttpClient) { }
+  constructor(private _http:HttpClient) { 
+    this.urlApi=environment.urlApiAccount;
+  }
   
   
   public updateMaxOverdraft(accountUk: string, maxOverdraft: number): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': 'http://localhost:4200', // Ajusta esto según tu frontend
-      // Agrega otras cabeceras necesarias aquí
-    });
-    const options = { headers: headers };
-    const url = `${this.urlApi}/account/${accountUk}`;
+    const url = `${this.urlApi}/account/${accountUk}/max-overdraft`;
+    const queryParams = new HttpParams().set('maxOverdraft', maxOverdraft.toString());
   
-    const accountData = {
-      maxOverdraft: maxOverdraft
-    };
-  
-    return this._http.put(url, accountData, options).pipe(
+    return this._http.put(url, null, { params: queryParams }).pipe(
       tap(response => {
-        console.log("Successful PUT request:", response);
+        //console.log("Successful PUT request:", response);
       }),
       catchError(error => {
-        console.error("Error in PUT request:"+ accountData , error);
+        console.error("Error en el request");
         throw error;
       })
     );
   }
+  
+  
   
 }

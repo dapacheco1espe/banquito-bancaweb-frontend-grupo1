@@ -66,12 +66,22 @@ export class AccountComponent implements OnInit {
       event.stopPropagation();
     }
     
-    obtainProductAccount(){
+    /*obtainProductAccount(){
       this._accountService.getProductAccount().subscribe( data=>{
         this.dataProductAccount=data;
         
       } )
     }
+    */
+
+    obtainProductAccount() {
+      this._accountService.getProductAccount().subscribe(data => {
+        const filteredData = data.filter(account => account.clientType === "NATURAL" && account.state === "Active");
+        
+        this.dataProductAccount = filteredData;
+      });
+    }
+    
 
     public createAccount(accountType: string): void {
       this._accountService.createAccount(this.clientService.getClientUk(),accountType).subscribe(

@@ -6,6 +6,7 @@ import { AccountService } from '../account/services/account.service';
 import { Account } from '../Models/Account';
 import { Router } from '@angular/router';
 import { LoanPaymentService } from './services/loan-payment.service';
+import { AccountTransactionService } from '../account-transaction/services/account-transaction.service';
 @Component({
   selector: 'app-loan-payment',
   templateUrl: './loan-payment.component.html',
@@ -15,7 +16,9 @@ export class LoanPaymentComponent implements OnInit {
 
   constructor(private _accountService:AccountService,private _loanOperationDataShareService: LoanOperationsDataShareService,
     private loanPaymentService: LoanPaymentService,
-    private router: Router) { }
+    private router: Router,
+    private accountTransactionService: AccountTransactionService,
+    ) { }
 
   public montoAPagar: number=0;
   public loan: Loan;
@@ -43,7 +46,7 @@ export class LoanPaymentComponent implements OnInit {
       return;
     }
 
-    const selectedAccount: Account = await this._accountService.getAccount(this.selectedAccount).toPromise();
+    //const selectedAccount: Account = await this._accountService.getAccount(this.selectedAccount).toPromise();
     //console.log(selectedAccount);
     /*
     if (!selectedAccount || selectedAccount=== undefined) {
@@ -59,15 +62,44 @@ export class LoanPaymentComponent implements OnInit {
     }
     */
 
-    this.createPayment(selectedAccount.id,"",1,this.montoAPagar);
-    this.showSuccessPopup = true;
+    //console.log(this.montoAPagar,'',this.selectedAccount);
 
-    setTimeout(() => {
-      this.showSuccessPopup = false;
-      this.router.navigate(['/']);
-    }, 3000);
+    this.accountTransactionService.createTransacctionAccount(this.montoAPagar,'20205224',this.selectedAccount,'PAGO PRESTAMO').subscribe(
+      response => {
+        this.showSuccessMessage();
+      },
+      error => {
+        this.showErrorMessage();
+      });
+
+    //this.createPayment(selectedAccount.id,"",1,this.montoAPagar);
+    //this.showSuccessPopup = true;
 
     this.errorMessage = '';
+  }
+  
+
+  showSuccess = false;
+  showFailed = false;
+  isPopupOpen = false;
+  showSuccessMessage() {
+    this.showSuccess = true;
+    setTimeout(() => {
+      this.closePopupAndReset();
+      this.router.navigate(['/']);
+    }, 3000);
+  }
+
+  showErrorMessage() {
+    this.showFailed = true;
+    setTimeout(() => {
+      this.closePopupAndReset();
+    }, 3000);
+  }
+  closePopupAndReset() {
+    this.isPopupOpen = false;
+    this.showSuccess = false;
+    this.showFailed = false;
   }
 
   

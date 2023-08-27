@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Account } from '../../Models/Account';
-import { tap } from 'rxjs/operators';
+import { tap,map } from 'rxjs/operators';
+import { environment } from 'environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +13,14 @@ export class AccountService {
   private _accounts:BehaviorSubject<Account[]> = new BehaviorSubject<Account[]>([]);
 
   
-  private urlApi='http://localhost:9003/api/v1/accounts';
-  //private urlApi='https://64b14cc3062767bc4825fe08.mockapi.io/api/v1/account';
+  private urlApi='';
   
-  private urlProductApi='https://64b14cc3062767bc4825fe08.mockapi.io/api/v1/productAccount';
+  private urlProductApi='';
+
   constructor(private _http:HttpClient) {
     
-    
+    this.urlApi=environment.urlApiAccount
+    this.urlProductApi=environment.urlApiAccountProduct
     
   }
 
@@ -36,6 +38,7 @@ export class AccountService {
     );
   }
 
+  
   public getAccount(accountUK: String): Observable<any> {
     const urlWithParams = `${this.urlApi}/account/${accountUK}`; 
     return this._http.get(urlWithParams).pipe(
@@ -44,14 +47,12 @@ export class AccountService {
       })
     );
   }
-
- 
   
   public createAccount(clientUk: String, productUk: string): Observable<any> {
     const accountData = {
       clientUk: clientUk,
       uniqueKey: '',
-      codeInternalAccount: Math.floor(Math.random() * 90000000) + 10000000,
+      codeInternalAccount: '',
       name: '',
       totalBalance: 0,
       availableBalance: 0,
@@ -76,6 +77,14 @@ export class AccountService {
   
 
   public getProductAccount(): Observable<any>{
-    return this._http.get<any>(this.urlProductApi);
+    const urlApiProduct = `${this.urlProductApi}/productos`; 
+    return this._http.get<any>(urlApiProduct);
   }
+
+  getTypeOfAccount(productId: string): Promise<string> {
+    const urlMongo = `${this.urlProductApi}/productos/${productId}`;
+    return this._http.get<any>(urlMongo).toPromise()
+        .then(response => response.name);
+}
+
 }

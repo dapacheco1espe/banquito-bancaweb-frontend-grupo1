@@ -1,23 +1,19 @@
 <div class="w-full h-full flex flex-col p-4 bg-white">
-    <h1 class="font-bold  text-3xl text-gray-700">Préstamos</h1>
-    <p class="text-gray-400">Elige una de las opciones, solicitar préstamos o realizar una simulación</p>
-    <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 p-3">
-      
-      <div>
-        <ul class="flex justify-center ">
-          <li class="inline-block mr-3">
-            <div> 
-              <section (click)="navigateToPages('loan-product')" class="w-full sm:w-1/2 cursor-pointer bg-white rounded-md flex flex-col shadow-md justify-center p-4 h-40">
-                <h1 class="text-center flex flex-col gap-1 text-center font-bold text-blue-500 text-xl">
-                  <mat-icon class="self-center icon-size-8 text-blue-500" svgIcon="heroicons_outline:currency-dollar"></mat-icon>
-                  Solicitar Préstamo
-                </h1>
-              </section>
-            </div>
-          </li>
-        </ul>
-      </div>
+  <h1 class="font-bold  text-3xl text-gray-700">Préstamos</h1>
+  <p class="text-gray-400">Elige una de las opciones, solicitar préstamos o realizar una simulación</p>
+  <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 p-3">
+<div class="flex justify-center">
+  <div (click)="navigateToPages('loan-product')" class="w-64 bg-white rounded-md flex flex-col items-center shadow-md h-22 p-2">
+    <div class="text-center">
+      <mat-icon class="icon-size-6 text-blue-500 mb-1" svgIcon="heroicons_outline:currency-dollar"></mat-icon>
+      <h1 class="font-bold text-blue-500 text-lg">Solicitar Préstamo</h1>
+    </div>
   </div>
+</div>
+</div>
+   
+   
+    
     
     <div class="flex flex-wrap">
       <div  *ngFor="let item of loa" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 m-2 hover:animate-spin">
