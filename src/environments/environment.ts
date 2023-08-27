@@ -4,14 +4,16 @@
 
 export const environment = {
     production: false,
-    //urlApi:'http://localhost:9003/api/v1/accounts',
-    urlApiAccountProduct: 'https://64b14cc3062767bc4825fe08.mockapi.io/api/v1/productAccount',
-    urlApiAccount:'http://localhost:9003/api/v1/accounts',
-    urlApiAccountTransaction: 'http://localhost:9003/api/v1/transactions/history-transaction',
+    urlApiAccount:'https://banquito-accounts-try-production.up.railway.app/api/v1/accounts',
+    urlApiAccountProduct: 'https://banquito-ws-passive-products-zsorzzk5da-uc.a.run.app/api/v1/productAccount',
+    urlApiAccountTransaction: 'https://banquito-accounts-try-production.up.railway.app/api/v1/transactions',
 
-    urlApiLoan: 'http://localhost:9003/api/v2/loans',
-    urlApiLoanAmortization: 'http://localhost:9003/api/v1/amortization',
+    /*
     urlApiLoanRepayment: 'http://localhost:9003/api/v1/repayment',
+    */
+    urlApiLoan: 'https://banquito-ws-loans-zsorzzk5da-uc.a.run.app//api/v2/loans',
+    urlApiLoanProduct: 'https://banquito-ws-active-products3-zsorzzk5da-uc.a.run.app/api/v1/loanProduct',
+    urlApiLoanAmortization: 'https://banquito-ws-loans-zsorzzk5da-uc.a.run.app//api/v1/amortization',
 };
 
 /*

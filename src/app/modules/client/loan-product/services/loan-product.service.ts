@@ -14,7 +14,7 @@ export class LoanProductService {
   private _productsLoan:BehaviorSubject<LoanProduct[]> = new BehaviorSubject<LoanProduct[]>([]);
 
   constructor(private _http:HttpClient) { 
-    this.urlApi=environment.urlApiLoan;
+    this.urlApi=environment.urlApiLoanProduct;
   }
 
   get productLoans$():Observable<LoanProduct[]>{
@@ -23,7 +23,7 @@ export class LoanProductService {
   }
 
   public getLoanProducts(): Observable<any> {
-    const urlWithParams = `${this.urlApi}/products`; 
+    const urlWithParams = `${this.urlApi}/productos`; 
     return this._http.get(urlWithParams).pipe(
       tap(response => {
         this._productsLoan.next(response);

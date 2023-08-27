@@ -18,7 +18,7 @@ export class LoanHistoryService {
   constructor(
     private _http:HttpClient
   ) {
-    this.urlApi=environment.urlApiLoanRepayment;
+    //this.urlApi=environment.urlApiLoanRepayment;
    }
   
 

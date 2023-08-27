@@ -17,24 +17,6 @@ export class AccountSettingService {
   }
   
   
-  /*public updateMaxOverdraft(accountUk: string, maxOverdraft: number): Observable<any> {
-    const url = `${this.urlApi}/account/${accountUk}/max-overdraft`;
-  
-    const requestBody = {
-      maxOverdraft: maxOverdraft
-    };
-  
-    return this._http.put(url, requestBody).pipe(
-      tap(response => {
-        console.log("Successful PUT request:", response);
-      }),
-      catchError(error => {
-        console.error("Error in PUT request:", error);
-        throw error;
-      })
-    );
-  }
-  */
   public updateMaxOverdraft(accountUk: string, maxOverdraft: number): Observable<any> {
     const url = `${this.urlApi}/account/${accountUk}/max-overdraft`;
     const queryParams = new HttpParams().set('maxOverdraft', maxOverdraft.toString());

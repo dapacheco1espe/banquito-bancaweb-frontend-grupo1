@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Account } from '../../Models/Account';
-import { tap } from 'rxjs/operators';
+import { tap,map } from 'rxjs/operators';
 import { environment } from 'environments/environment';
 
 @Injectable({
@@ -16,6 +16,7 @@ export class AccountService {
   private urlApi='';
   
   private urlProductApi='';
+
   constructor(private _http:HttpClient) {
     
     this.urlApi=environment.urlApiAccount
@@ -37,6 +38,7 @@ export class AccountService {
     );
   }
 
+  
   public getAccount(accountUK: String): Observable<any> {
     const urlWithParams = `${this.urlApi}/account/${accountUK}`; 
     return this._http.get(urlWithParams).pipe(
@@ -45,8 +47,6 @@ export class AccountService {
       })
     );
   }
-
- 
   
   public createAccount(clientUk: String, productUk: string): Observable<any> {
     const accountData = {
@@ -77,6 +77,14 @@ export class AccountService {
   
 
   public getProductAccount(): Observable<any>{
-    return this._http.get<any>(this.urlProductApi);
+    const urlApiProduct = `${this.urlProductApi}/productos`; 
+    return this._http.get<any>(urlApiProduct);
   }
+
+  getTypeOfAccount(productId: string): Promise<string> {
+    const urlMongo = `${this.urlProductApi}/productos/${productId}`;
+    return this._http.get<any>(urlMongo).toPromise()
+        .then(response => response.name);
+}
+
 }

@@ -23,7 +23,7 @@
                 <div class="mt-4">
                   <label class="block text-lg font-bold mb-2" for="selectAccount">Selecciona una cuenta:</label>
                   <select id="selectAccount" [(ngModel)]="selectedAccount" class="w-full border border-gray-300 px-4 py-2 rounded">
-                    <option *ngFor="let account of accounts" [value]="account.uniqueKey">{{ account.name }}</option>
+                    <option *ngFor="let account of accounts" [value]="account.codeInternalAccount">{{ account.name }}</option>
                   </select>
                 </div>
               </ng-container>
@@ -43,7 +43,7 @@
       </div>
     </div>
   
-  <!-- Agregamos el popup para mostrar el mensaje de éxito -->
+  
   <div
     *ngIf="showSuccessPopup"
     class="fixed inset-0 flex items-center justify-center backdrop-filter backdrop-blur bg-opacity-75 bg-gray-900"
@@ -59,6 +59,23 @@
           Cerrar
         </button>
       </div>
+    </div>
+  </div>
+  <div *ngIf="showSuccess" class="fixed inset-0 flex items-center justify-center">
+    <div class="bg-green-500 text-white px-4 py-2 rounded flex items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 mr-2">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+      </svg>
+      <p class="text-lg">¡El pago se ha realizado con éxito!</p>
+    </div>
+  </div>
+  
+  <div *ngIf="showFailed" class="fixed inset-0 flex items-center justify-center">
+    <div class="bg-red-500 text-white px-4 py-2 rounded flex items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 mr-2">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+      <p class="text-lg">¡Ocurrió un error!</p>
     </div>
   </div>
 </div>

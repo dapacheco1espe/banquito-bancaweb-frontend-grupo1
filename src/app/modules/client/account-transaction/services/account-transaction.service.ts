@@ -10,10 +10,11 @@ import { environment } from 'environments/environment';
 export class AccountTransactionService {
 
   private urlApi='';
-
+ private urlApiTransaction='';
 
   constructor(private _http:HttpClient) {
     this.urlApi=environment.urlApiAccount;
+    this.urlApiTransaction=environment.urlApiAccountTransaction;
    }
 
   
@@ -33,7 +34,7 @@ export class AccountTransactionService {
       transactionType: 'TRANSFER',
       notes: notes
     };
-    const urlWithParams = `${this.urlApi}/transaction`;
+    const urlWithParams = `${this.urlApiTransaction}/transaction`;
     return this._http.post(urlWithParams, transactionData).pipe(
       map(response => {
         //this.getUserAccounts(customerId).subscribe();
@@ -41,4 +42,6 @@ export class AccountTransactionService {
       })
     );
   }
+
+  
 }

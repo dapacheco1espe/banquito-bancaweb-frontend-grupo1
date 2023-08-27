@@ -17,7 +17,7 @@ export class AccountHistoryService {
    }
 
    public getHistoryAccount(acountUK: String, startDate?: Date, endDate?: Date): Observable<any> {
-    let urlWithParams = `${this.urlApi}/${acountUK}`; 
+    let urlWithParams = `${this.urlApi}/history-transaction/${acountUK}`; 
     if (startDate && endDate) {
       urlWithParams += `?startDate=${startDate.getTime()}&endDate=${endDate.getTime()}`;
       

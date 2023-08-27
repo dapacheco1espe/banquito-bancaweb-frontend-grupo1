@@ -78,6 +78,9 @@ export class AccountHistoryComponent implements OnInit {
       next: (response) => {
         this.transaction = response;
       },
+      error: (error) => {
+        this.transaction = []; 
+      }
     });
   }
   

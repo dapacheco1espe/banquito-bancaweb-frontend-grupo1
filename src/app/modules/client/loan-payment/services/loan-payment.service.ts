@@ -10,12 +10,14 @@ import { map } from 'rxjs/operators';
 export class LoanPaymentService {
 
   private urlApi='';
+  private urlApiTransaction='';
 
 
   constructor(
     private _http:HttpClient
   ) {
-    this.urlApi=environment.urlApiLoanRepayment;
+    //this.urlApi=environment.urlApiLoanRepayment;
+    this.urlApiTransaction=environment.urlApiAccountTransaction;
    }
 
 
@@ -29,8 +31,26 @@ export class LoanPaymentService {
     const urlWithParams = `${this.urlApi}/doPay`;
     return this._http.post(urlWithParams, paymentData).pipe(
       map(response => {
-        //console.log(ammount);
+        //console.log(ammount); 
+      })
+    );
+  }
+  public createTransacctionAccount(ammount: number, creditorAccount: string,debtorAccount: string,notes: string): Observable<any> {
+    const transactionData = {
+      reference: '',
+      ammount: ammount,
+      creditorBankCode: 'BANQ',
+      creditorAccount: creditorAccount,
+      debtorBankCode: 'BANQ',
+      debtorAccount: debtorAccount,
+      transactionType: 'LOAN_REPAID',
+      notes: notes
+    };
+    const urlWithParams = `${this.urlApiTransaction}/transaction`;
+    return this._http.post(urlWithParams, transactionData).pipe(
+      map(response => {
       })
     );
   }
 }
+

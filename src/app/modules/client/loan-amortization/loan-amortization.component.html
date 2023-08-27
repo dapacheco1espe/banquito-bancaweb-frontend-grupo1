@@ -1,6 +1,5 @@
 <div class="container mx-auto p-4">
     <h1 class="text-2xl font-bold mb-4">Préstamo</h1>
-  
     <div class="flex flex-wrap">
       <div class="w-full md:w-4/5 mb-8 md:mb-8">
         <h2 class="text-lg font-bold mb-2">Datos generales del préstamo</h2>
@@ -13,22 +12,22 @@
               <tbody>
                 <tr>
                     <td class="font-bold p-2 border-b">Fecha:</td>
-                  <td class="p-2 border-b">14/7/2023</td>
+                  <td class="p-2 border-b">{{ getCurrentDate() }}</td>
                   <td class="font-bold p-2 border-b">Monto:</td>
-                    <td class="p-2 border-b">$ 12345</td>
+                    <td class="p-2 border-b">$ {{ loanForm.amount }}</td>
                   
                 </tr>
                 <tr>
                     <td class="font-bold p-2 border-b">Tipo de Préstamo:</td>
-                  <td class="p-2 border-b">Consumo</td>
+                  <td class="p-2 border-b">{{ loanForm.nameProduct }}</td>
                   <td class="font-bold p-2 border-b">Interes Anual:</td>
                     <td class="p-2 border-b">16.5%</td>
                   </tr>
                   <tr>
                     <td class="font-bold p-2 border-b">Sistema de Amortización: </td>
-                    <td class="p-2 border-b">Fránces</td>
+                    <td class="p-2 border-b">{{ loanForm.typeAmortization.toUpperCase() }}</td>
                     <td class="font-bold p-2 border-b">Cuotas: </td>
-                    <td class="p-2 border-b">3 meses</td>
+                    <td class="p-2 border-b">{{ loanForm.repaymentPeriodCount }} meses</td>
                   </tr>
               </tbody>
         </table>
@@ -37,43 +36,28 @@
       <div class="w-full md:w-4/5 mx-auto">
         <h2 class="text-lg font-bold mb-2">Tabla de amortización</h2>
         <table class="w-full border border-gray-200">
-            <thead>
-                <tr>
-                  <th class="p-2 border-b">Num. Cuota</th>
-                  <th class="p-2 border-b">Fecha</th>
-                  <th class="p-2 border-b">Balance Restante</th>
-                  <th class="p-2 border-b">Capital</th>
-                  <th class="p-2 border-b">Interés</th>
-                  <th class="p-2 border-b">Monto</th>
-                </tr>
-              </thead>
-              <tbody class="text-center">
-                <tr>
-                  <td class=" p-2 border-b">1</td>
-                  <td class="p-2 border-b">2023-08-15</td>
-                  <td class="p-2 border-b">1000</td>
-                  <td class="p-2 border-b">328,65</td>
-                  <td class="p-2 border-b">13,25</td>
-                  <td class="p-2 border-b">342,30</td>
-                </tr>
-                <tr>
-                    <td class="p-2 border-b">2</td>
-                    <td class="p-2 border-b">2023-09-15</td>
-                    <td class="p-2 border-b">671,35</td>
-                    <td class="p-2 border-b">333,42</td>
-                    <td class="p-2 border-b">8,61</td>
-                    <td class="p-2 border-b">342,30</td>
-                  </tr>
-                  <tr>
-                    <td class="p-2 border-b">3</td>
-                    <td class="p-2 border-b">2023-10-15</td>
-                    <td class="p-2 border-b">337,93</td>
-                    <td class="p-2 border-b">337,93</td>
-                    <td class="p-2 border-b">4,48</td>
-                    <td class="p-2 border-b">342,55</td>
-                  </tr>
-              </tbody>
+          <thead>
+            <tr>
+              <th class="p-2 border-b">Num. Cuota</th>
+              <th class="p-2 border-b">Fecha</th>
+              <th class="p-2 border-b">Balance Restante</th>
+              <th class="p-2 border-b">Capital</th>
+              <th class="p-2 border-b">Interés</th>
+              <th class="p-2 border-b">Monto</th>
+            </tr>
+          </thead>
+          <tbody class="text-center">
+            <tr *ngFor="let amortization of loanAmortization">
+              <td class="p-2 border-b">{{ amortization.quotaNum }}</td>
+              <td class="p-2 border-b">{{ amortization.dueDate | date: 'yyyy-MM-dd' }}</td>
+              <td class="p-2 border-b">{{ amortization.remainingBalance }}</td>
+              <td class="p-2 border-b">{{ amortization.quotaCapital | number: '1.2-2' }}</td>
+              <td class="p-2 border-b">{{ amortization.quotaInterest | number: '1.2-2' }}</td>
+              <td class="p-2 border-b">{{ amortization.quotaAmount | number: '1.2-2' }}</td>
+            </tr>
+          </tbody>
         </table>
+        
       </div>
     </div>
   
@@ -91,8 +75,8 @@
         </div>
         <p class="mb-2">Donde desea que sea depositado el dinero:</p>
         <ng-container *ngIf="(accounts$ | async) as accounts">
-        <select class="mt-2 p-2 border rounded">
-          <option *ngFor="let account of accounts" [value]="account.uniqueKey">{{ account.name }}</option>
+        <select class="mt-2 p-2 border rounded" [(ngModel)]="selectedAccountKey">
+          <option *ngFor="let account of accounts" [value]="account.id">{{ account.name }}</option>
         </select>
       </ng-container>
         <div class="border-t mt-4 pt-4">

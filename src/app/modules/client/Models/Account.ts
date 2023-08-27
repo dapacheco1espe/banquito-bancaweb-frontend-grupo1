@@ -7,4 +7,6 @@ export interface Account{
     codeInternalAccount: string,
     availableBalance: number,
     totalBalance: number,
+    productUk: string,
+    tipoCuenta: string,
 }

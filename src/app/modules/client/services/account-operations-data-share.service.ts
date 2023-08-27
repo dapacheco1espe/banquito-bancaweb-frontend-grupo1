@@ -15,6 +15,8 @@ export class AccountOperationsDataShareService {
     codeInternalAccount: '',
     availableBalance: 0,
     totalBalance: 0,
+    productUk:'',
+    tipoCuenta:'',
   });
   constructor() { }
 
