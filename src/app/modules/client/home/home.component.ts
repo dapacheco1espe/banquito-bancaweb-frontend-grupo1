@@ -39,18 +39,6 @@ export class HomeComponent implements OnInit {
         this.router.navigateByUrl(`/client/${page}`);
     }
 
-    /*
-    public getAccount() {
-        const clientUk = '46c36f57-5370-4f88-9232-42616a2a348d';
-        this.clientService.setClientUk(clientUk);
-        this.account.getUserAccounts(clientUk).subscribe({
-            next: (response) => {
-                this.acc = response;
-            },
-        });
-    }
-    */
-
      
     public getAccount() {
     
@@ -65,28 +53,37 @@ export class HomeComponent implements OnInit {
         },
     });
 }
+/*
     async getLoanData(): Promise<void> {
         
         this.accounts = await this.account.getUserAccounts(this.clientUk).toPromise();
 
         for (const account of this.accounts) {
         const loansForAccount = await this.loan.getUserLoans(account.id).toPromise();
+        
         this.loans.push(...loansForAccount);
         }
         
     }
+*/
+async getLoanData(): Promise<void> {
+    this.accounts = await this.account.getUserAccounts(this.clientUk).toPromise();
+
+    for (const account of this.accounts) {
+        try {
+            const loansForAccount = await this.loan.getUserLoans(account.id).toPromise();
+            if (loansForAccount.length > 0) {
+                this.loans.push(...loansForAccount);
+            }
+            await new Promise(resolve => setTimeout(resolve, 500));
+        } catch (error) {
+            
+        }
+    }
+}
 
     
    
-/*
-    public getLoan() {
-        this.loan.getLoan().subscribe({
-            next: (response) => {
-                this.loa = response;
-                
-            },
-        });
-    }*/
 
     public saveAccountOnServiceForDataShare(account:Account){
         this._accountOperationsDataShareService.account = account;
