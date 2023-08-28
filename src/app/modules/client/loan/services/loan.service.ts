@@ -25,6 +25,7 @@ export class LoanService {
     return this._loans.asObservable();
   }
 
+  
   public getUserLoans(customerUK: String): Observable<any> {
     const urlWithParams = `${this.urlApi}/getLoansByAccount/${customerUK}`; 
     return this._http.get(urlWithParams).pipe(
