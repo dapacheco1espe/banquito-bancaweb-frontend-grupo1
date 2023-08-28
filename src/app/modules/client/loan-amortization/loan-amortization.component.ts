@@ -6,6 +6,7 @@ import { LoanFormDataShareService } from '../services/loan-form-data-share.servi
 import { LoanForm } from '../Models/LoanForm';
 import { LoanAmortizationService } from './services/loan-amortization.service';
 import { LoanAmortization } from '../Models/LoanAmortization';
+import { AccountTransactionService } from '../account-transaction/services/account-transaction.service';
 @Component({
   selector: 'app-loan-amortization',
   templateUrl: './loan-amortization.component.html',
@@ -14,15 +15,18 @@ import { LoanAmortization } from '../Models/LoanAmortization';
 export class LoanAmortizationComponent implements OnInit {
 
   public accounts$:Observable<any>;
-  selectedAccountKey: string | null = null;
+  selectedAccountKey: any;
   loanForm: LoanForm;
-  loanAmortization: LoanAmortization;
+  loanAmortization: LoanAmortization[];
   typeAmortizationPrefix: string;
+  currentPage: number = 1;
+  itemsPerPage: number = 10;
 
   constructor(private router: Router,
     private _accountService:AccountService,
     private _loanFormDataShareService: LoanFormDataShareService,
     private _loanAmortizationService: LoanAmortizationService,
+    private accountTransactionService: AccountTransactionService,
     ) { }
 
   ngOnInit(): void {
@@ -53,7 +57,9 @@ export class LoanAmortizationComponent implements OnInit {
   }
 
   depositarCuenta() {
-    const accountId=parseInt(this.selectedAccountKey);
+    console.log(this.selectedAccountKey);
+    console.log(this.selectedAccountKey.id);
+    const accountId=parseInt(this.selectedAccountKey.id);
     const branchId=1;
     const loanProductId=this.loanForm.loanProductId.toString();
     const accountHolderType="CLI";
@@ -66,13 +72,14 @@ export class LoanAmortizationComponent implements OnInit {
       response => {
         
         const loanCreateId = response.id;
+        this.createTransfer(amount,this.selectedAccountKey.codeInternalAccount,'20205224','DESEMBOLSO PRESTAMO');
         this.createAmortization(loanCreateId,this.typeAmortizationPrefix);
+        
       },
       error => {
         this.showErrorMessage();
       }
     );
-    
     
   }
   
@@ -108,13 +115,32 @@ export class LoanAmortizationComponent implements OnInit {
   public createAmortization(loanId: number,type: string): void {
     this._loanAmortizationService.generateAmortization(loanId,type).subscribe(
       response => {
+        
         this.showSuccessMessage();
+
       },
       error => {
         this.showErrorMessage();
       }
     );
   }
+  
+  changePage(newPage: number) {
+    if (newPage >= 1 && newPage <= Math.ceil(this.loanAmortization.length / this.itemsPerPage)) {
+      this.currentPage = newPage;
+    }
+  }
+  public createTransfer( amount: number, creditorAccount: string,debtorAccount: string,notes:string): void {
+    this.accountTransactionService.createTransacctionAccount(amount,creditorAccount,debtorAccount,notes).subscribe(
+      response => {
+        //this.showSuccessMessage();
+      },
+      error => {
+        this.showErrorMessage();
+      }
+    );
+  }
+
   
   
 

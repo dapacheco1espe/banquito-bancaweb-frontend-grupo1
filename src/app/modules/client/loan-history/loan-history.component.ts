@@ -31,9 +31,11 @@ export class LoanHistoryComponent implements OnInit {
     this.loanTransaction.findByLoan(this.loan.uuid).subscribe({
         next: (response) => {
             this.transaction = response;
+            this.transaction.sort((a, b) => a.quotaNum - b.quotaNum);
         },
     });
 }
+
 
 changePage(newPage: number) {
   if (newPage >= 1 && newPage <= Math.ceil(this.transaction.length / this.itemsPerPage)) {
