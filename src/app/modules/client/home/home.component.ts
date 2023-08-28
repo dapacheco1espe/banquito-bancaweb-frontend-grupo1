@@ -53,19 +53,7 @@ export class HomeComponent implements OnInit {
         },
     });
 }
-/*
-    async getLoanData(): Promise<void> {
-        
-        this.accounts = await this.account.getUserAccounts(this.clientUk).toPromise();
 
-        for (const account of this.accounts) {
-        const loansForAccount = await this.loan.getUserLoans(account.id).toPromise();
-        
-        this.loans.push(...loansForAccount);
-        }
-        
-    }
-*/
 async getLoanData(): Promise<void> {
     this.accounts = await this.account.getUserAccounts(this.clientUk).toPromise();
 
