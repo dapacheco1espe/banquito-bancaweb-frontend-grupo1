@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoanService } from 'app/mock-api/http/loans.services';
+import { LoanService } from '../loan/services/loan.service';
 import { Loan } from '../Models/Loan';
 import { Account } from '../Models/Account';
 import { AccountService } from '../account/services/account.service';
@@ -17,6 +17,9 @@ import { ClientDataShareService } from '../services/client-data-share.service';
 export class HomeComponent implements OnInit {
     public acc!: Account[];
     public loa!: Loan[];
+    accounts: any[] = []; 
+    loans: any[] = []; 
+    clientUk = '46c36f57-5370-4f88-9232-42616a2a348d';
     constructor(
         private router: Router,
         private account: AccountService,
@@ -26,9 +29,9 @@ export class HomeComponent implements OnInit {
         private clientService: ClientDataShareService
     ) {}
 
-    ngOnInit(): void {
+    async ngOnInit(): Promise<void> {
         this.getAccount();
-        this.getLoan();
+        await this.getLoanData();
         
     }
 
@@ -50,10 +53,10 @@ export class HomeComponent implements OnInit {
 
      
     public getAccount() {
-    const clientUk = '46c36f57-5370-4f88-9232-42616a2a348d';
-    this.clientService.setClientUk(clientUk);
     
-    this.account.getUserAccounts(clientUk).subscribe({
+    this.clientService.setClientUk(this.clientUk);
+    
+    this.account.getUserAccounts(this.clientUk).subscribe({
         next: async (response) => {
             for (const acc of response) {
                 acc.tipoCuenta = await this.account.getTypeOfAccount(acc.productUk);
@@ -62,10 +65,21 @@ export class HomeComponent implements OnInit {
         },
     });
 }
+    async getLoanData(): Promise<void> {
+        this.accounts = await this.account.getUserAccounts(this.clientUk).toPromise();
+
+        for (const account of this.accounts) {
+        const loansForAccount = await this.loan.getUserLoans(account.id).toPromise();
+        this.loans.push(...loansForAccount);
+        }
+
+        console.log('Accounts:', this.accounts);
+        console.log('Loans:', this.loans);
+    }
 
     
    
-
+/*
     public getLoan() {
         this.loan.getLoan().subscribe({
             next: (response) => {
@@ -73,7 +87,7 @@ export class HomeComponent implements OnInit {
                 
             },
         });
-    }
+    }*/
 
     public saveAccountOnServiceForDataShare(account:Account){
         this._accountOperationsDataShareService.account = account;

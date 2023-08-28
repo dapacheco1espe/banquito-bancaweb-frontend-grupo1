@@ -13,7 +13,8 @@ export class LoanService {
     public getLoan(): Observable<Loan[]> {
         const mockLoan: Loan[] = [
             {
-                id: 1,
+                id: 7,
+                uuid: 'd9230484-834d-4a1e-aafb-c5d943d5feeb',
                 name: 'Hipotecario',
                 code: '32437873',
                 nextPayment: 185.5,
@@ -21,6 +22,7 @@ export class LoanService {
             },
             {
                 id: 2,
+                uuid: "d9230484-834d-4a1e-aafb-c5d943d5feec",
                 name: 'Automovil',
                 code: '76487462',
                 nextPayment: 185.5,

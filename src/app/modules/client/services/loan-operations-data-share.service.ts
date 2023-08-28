@@ -8,6 +8,7 @@ import { Loan } from '../Models/Loan';
 export class LoanOperationsDataShareService {
   private _loan:BehaviorSubject<Loan> = new BehaviorSubject<Loan>({
     id: 0,
+    uuid: '',
     name: '',
     code: '',
     nextPayment: 0,

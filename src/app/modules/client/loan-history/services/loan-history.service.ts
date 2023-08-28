@@ -10,7 +10,7 @@ import { environment } from 'environments/environment';
 })
 export class LoanHistoryService {
   
-  private urlApi='';
+  private urlApiAmortization='';
 
   private _loanTransaction:BehaviorSubject<LoanTransaction[]> = new BehaviorSubject<LoanTransaction[]>([]);
 
@@ -18,17 +18,14 @@ export class LoanHistoryService {
   constructor(
     private _http:HttpClient
   ) {
-    //this.urlApi=environment.urlApiLoanRepayment;
+    this.urlApiAmortization=environment.urlApiLoanAmortization;
    }
   
 
-  public getHistoryLoan(acountUK: String): Observable<any> {
-    const urlWithParams = `${this.urlApi}/${acountUK}`; 
-    return this._http.get(urlWithParams).pipe(
-      tap(response => {
-        this._loanTransaction.next(response);
-      })
-    );
+  
+  findByLoan(uuid: String): Observable<any> {
+    const urlWithParams = `${this.urlApiAmortization}/findByLoan/${uuid}`;
+    return this._http.get(urlWithParams);
   }
 
 }

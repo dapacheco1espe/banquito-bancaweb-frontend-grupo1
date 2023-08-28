@@ -12,6 +12,8 @@ import { LoanTransaction } from '../Models/LoanTransaction';
 export class LoanHistoryComponent implements OnInit {
 
   public transaction!: LoanTransaction[];
+  currentPage: number = 1;
+  itemsPerPage: number = 10;
 
   constructor(private _loanOperationDataShareService: LoanOperationsDataShareService,
     private loanTransaction: LoanHistoryService) { }
@@ -23,13 +25,37 @@ export class LoanHistoryComponent implements OnInit {
         this.loan = loan;
       }
     });
+    this.getLoanHistory();
   }
   public getLoanHistory() {
-    this.loanTransaction.getHistoryLoan(this.loan.code).subscribe({
+    this.loanTransaction.findByLoan(this.loan.uuid).subscribe({
         next: (response) => {
             this.transaction = response;
         },
     });
+}
+
+changePage(newPage: number) {
+  if (newPage >= 1 && newPage <= Math.ceil(this.transaction.length / this.itemsPerPage)) {
+    this.currentPage = newPage;
+  }
+}
+getFormattedQuotaStatus(status: string): string {
+  if (status === 'CUR') {
+    return 'Por Pagar';
+  } else if (status === 'PEN') {
+    return 'Pendiente';
+  } else if (status === 'PAI') {
+    return 'Pagada';
+  } else {
+    return ''; 
+  }
+}
+
+calculateTotalPenAmount(): number {
+  return this.transaction
+    .filter(trans => trans.quotaStatus === 'PEN')
+    .reduce((total, trans) => total + trans.quotaAmount, 0);
 }
 
 }

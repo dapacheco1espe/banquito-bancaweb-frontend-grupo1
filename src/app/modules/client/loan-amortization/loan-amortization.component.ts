@@ -17,6 +17,7 @@ export class LoanAmortizationComponent implements OnInit {
   selectedAccountKey: string | null = null;
   loanForm: LoanForm;
   loanAmortization: LoanAmortization;
+  typeAmortizationPrefix: string;
 
   constructor(private router: Router,
     private _accountService:AccountService,
@@ -32,9 +33,9 @@ export class LoanAmortizationComponent implements OnInit {
         this.loanForm = loanForm;
       }
     });
-    const typeAmortizationPrefix = this.loanForm.typeAmortization.slice(0, 3).toUpperCase();
+     this.typeAmortizationPrefix = this.loanForm.typeAmortization.slice(0, 3).toUpperCase();
 
-    this._loanAmortizationService.getAmortization(typeAmortizationPrefix, this.loanForm.amount, this.loanForm.repaymentPeriodCount )
+    this._loanAmortizationService.getAmortization(this.typeAmortizationPrefix, this.loanForm.amount, this.loanForm.repaymentPeriodCount )
         .subscribe(data => {
           this.loanAmortization = data;
         });
@@ -42,6 +43,9 @@ export class LoanAmortizationComponent implements OnInit {
 
   showPopup = false;
   showPopupS = false;
+  showSuccess = false;
+  showFailed = false;
+  isPopupOpen = false;
 
   solicitarPrestamo() {
     this.showPopup = true;
@@ -54,25 +58,43 @@ export class LoanAmortizationComponent implements OnInit {
     const loanProductId=this.loanForm.loanProductId.toString();
     const accountHolderType="CLI";
     const name=this.loanForm.name;
-    const ammount=this.loanForm.amount;
+    const amount=this.loanForm.amount;
     const repaymentPeriodCount=this.loanForm.repaymentPeriodCount;
     const repaymentPeriodUnit=this.loanForm.repaymentPeriodUnit;
     
-    this._loanAmortizationService.createLoan(accountId, branchId,loanProductId,accountHolderType,name,ammount,repaymentPeriodCount,repaymentPeriodUnit).subscribe(
+    this._loanAmortizationService.createLoan(accountId, branchId,loanProductId,accountHolderType,name,amount,repaymentPeriodCount,repaymentPeriodUnit).subscribe(
       response => {
-        this.showPopupS = true;
-
-    setTimeout(() => {
-      this.showPopupS = false;
-      this.router.navigate(['/']);
-    }, 3000);
+        
+        const loanCreateId = response.id;
+        this.createAmortization(loanCreateId,this.typeAmortizationPrefix);
       },
       error => {
-        //this.showErrorMessage();
+        this.showErrorMessage();
       }
     );
     
     
+  }
+  
+
+  showSuccessMessage() {
+    this.showSuccess = true;
+    setTimeout(() => {
+      this.closePopupAndReset();
+      this.router.navigate(['/']);
+    }, 3000);
+  }
+
+  showErrorMessage() {
+    this.showFailed = true;
+    setTimeout(() => {
+      this.closePopupAndReset();
+    }, 3000);
+  }
+  closePopupAndReset() {
+    this.isPopupOpen = false;
+    this.showSuccess = false;
+    this.showFailed = false;
   }
 
   getCurrentDate(): string {
@@ -81,6 +103,17 @@ export class LoanAmortizationComponent implements OnInit {
     const month = String(currentDate.getMonth() + 1).padStart(2, '0');
     const year = currentDate.getFullYear();
     return `${day}/${month}/${year}`;
+  }
+
+  public createAmortization(loanId: number,type: string): void {
+    this._loanAmortizationService.generateAmortization(loanId,type).subscribe(
+      response => {
+        this.showSuccessMessage();
+      },
+      error => {
+        this.showErrorMessage();
+      }
+    );
   }
   
   

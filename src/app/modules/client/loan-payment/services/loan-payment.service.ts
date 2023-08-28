@@ -9,26 +9,28 @@ import { map } from 'rxjs/operators';
 })
 export class LoanPaymentService {
 
-  private urlApi='';
+  private urlApiLoanRepayment='';
   private urlApiTransaction='';
+  private urlApiAmortization='';
 
 
   constructor(
     private _http:HttpClient
   ) {
-    //this.urlApi=environment.urlApiLoanRepayment;
+    this.urlApiLoanRepayment=environment.urlApiLoanRepayment;
     this.urlApiTransaction=environment.urlApiAccountTransaction;
+    this.urlApiAmortization=environment.urlApiLoanAmortization;
    }
 
 
-  public createPaymentLoan(accountId: number,amortizationUuid: String,branchId: number, amountToPay: number ): Observable<any> {
+  public createPaymentLoan(accountTransactionId: number,amortizationUuid: string,branchId: number, amountToPay: number ): Observable<any> {
     const paymentData = {
-      accountTransactionId: accountId,
+      accountTransactionId: accountTransactionId,
       amortizationUuid: amortizationUuid,
       branchId: branchId,
       amountToPay: amountToPay,
     };
-    const urlWithParams = `${this.urlApi}/doPay`;
+    const urlWithParams = `${this.urlApiLoanRepayment}/doPay`;
     return this._http.post(urlWithParams, paymentData).pipe(
       map(response => {
         //console.log(ammount); 
@@ -47,10 +49,15 @@ export class LoanPaymentService {
       notes: notes
     };
     const urlWithParams = `${this.urlApiTransaction}/transaction`;
-    return this._http.post(urlWithParams, transactionData).pipe(
-      map(response => {
-      })
-    );
+    return this._http.post(urlWithParams, transactionData);
+    
   }
+
+  findByLoanAndQuotaStatus(uuid: String, quotaStatus: string): Observable<any> {
+    const urlWithParams = `${this.urlApiAmortization}/findByLoan-status/${uuid}/${quotaStatus}`;
+    return this._http.get(urlWithParams);
+  }
+
+  
 }
 

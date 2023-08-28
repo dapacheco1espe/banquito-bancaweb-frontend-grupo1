@@ -1,15 +1,15 @@
 <div class="w-full">
     <div  class="container mx-auto p-8">
         <h1 class="text-4xl font-bold mb-4">Historial de Transacciones</h1>
-        <h2 class="text-lg text-gray-600">Prestamo : {{loan.code}} </h2>
+        <h2 class="text-lg text-gray-600">Prestamo : {{loan.name}} </h2>
       
-        <div class="flex mt-8">
+        <div class=" flex mt-8">
           <div class="mr-8">
             <div class="flex">
-            <h3 class="text-lg font-bold mb-2">Próximo Pago</h3>
-            <p class="text-m ml-4">{{loan.nextPayment}}</p>
+            <h3 class="text-lg font-bold mb-2">Total de Montos Pendientes:</h3>
+            <p class="text-m ml-4">{{ calculateTotalPenAmount() | currency }}</p>
         </div>
-        <div class="flex">
+        <div class="hidden flex">
             <h6 class="mb-2">Fecha:</h6>
             <p class="text-sm ml-4">{{loan.nextPaymentDate | date: 'dd/MM/yyyy'}}</p>
         </div>
@@ -21,25 +21,55 @@
           </div>
         </div>
       
-        <table class="mt-8 w-full" *ngIf="transaction && transaction.length > 0 ; else noTransactions">
+        <table class="mt-8 w-full" *ngIf="transaction && transaction.length > 0; else noTransactions">
           <thead>
             <tr>
-              <th class="bg-gray-200 text-left py-2 px-4">Fecha</th>
+              <th class="bg-gray-200 text-left py-2 px-4">Número de Cuota</th>
+              <th class="bg-gray-200 text-left py-2 px-4">Fecha de Vencimiento</th>
+              <th class="bg-gray-200 text-right py-2 px-4">Capital</th>
+              <th class="bg-gray-200 text-right py-2 px-4">Interés</th>
+              <th class="bg-gray-200 text-right py-2 px-4">Monto Total</th>
+              <th class="bg-gray-200 text-right py-2 px-4">Saldo Restante</th>
               <th class="bg-gray-200 text-center py-2 px-4">Estado</th>
-              <th class="bg-gray-200 text-right py-2 px-4">Monto</th>
-              <th class="bg-gray-200 text-center py-2 px-4">Saldo Restante</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let trans of transaction">
+            <tr *ngFor="let trans of transaction.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">
+              <td class="border py-2 px-4">{{ trans.quotaNum }}</td>
               <td class="border py-2 px-4">{{ trans.dueDate | date: 'dd/MM/yyyy' }}</td>
-              <td class="border py-2 px-4 text-center">{{ trans.reference }}</td>
-              <td class="border py-2 px-4 text-center">{{trans.state}}</td>
-              <td class="border py-2 px-4 text-right">{{ trans.principalPaid | currency }}</td>
-              <td class="border py-2 px-4 text-right">{{ trans.principalDue | currency }}</td>
+              <td class="border py-2 px-4 text-right">{{ trans.quotaCapital | currency }}</td>
+              <td class="border py-2 px-4 text-right">{{ trans.quotaInterest | currency }}</td>
+              <td class="border py-2 px-4 text-right">{{ trans.quotaAmount | currency }}</td>
+              <td class="border py-2 px-4 text-right">{{ trans.remainingBalance | currency }}</td>
+              <td class="border py-2 px-4 text-center">{{ getFormattedQuotaStatus(trans.quotaStatus) }}</td>
             </tr>
           </tbody>
         </table>
+        
+        
+        <div class="flex justify-center my-4 space-x-4"  *ngIf="transaction && transaction.length > 0">
+          <button
+            class="px-4 py-2 rounded bg-blue-800 text-white"
+            (click)="changePage(currentPage - 1)"
+            [disabled]="currentPage === 1"
+          >
+            Anterior
+          </button>
+          <span class="text-lg font-semibold">{{ currentPage }}</span>
+          <button
+            class="px-4 py-2 rounded bg-blue-800 text-white"
+            (click)="changePage(currentPage + 1)"
+            [disabled]="currentPage * itemsPerPage >= transaction.length"
+          >
+            Siguiente
+          </button>
+        </div>
+        
+        
+
+
+        
+        
         <ng-template #noTransactions>
           <p>No hay transacciones disponibles.</p>
         </ng-template>

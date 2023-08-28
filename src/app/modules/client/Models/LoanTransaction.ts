@@ -1,10 +1,12 @@
 export interface LoanTransaction{
     id: number,
-    loanId: number,
-    amortizationId: number,
-    state: string,
+    loanUuid: string,
+    quotaNum: number,
     dueDate: Date,
-    repaidDate: Date,
-    principalDue: number,
-    principalPaid: number,
+    quotaCapital:number,
+    quotaInterest:number,
+    quotaAmount:number,
+    remainingBalance:number,
+    quotaStatus:string
+   
 }

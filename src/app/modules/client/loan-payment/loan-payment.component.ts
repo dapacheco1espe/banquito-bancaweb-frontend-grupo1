@@ -13,6 +13,7 @@ import { AccountTransactionService } from '../account-transaction/services/accou
   styleUrls: ['./loan-payment.component.scss']
 })
 export class LoanPaymentComponent implements OnInit {
+  
 
   constructor(private _accountService:AccountService,private _loanOperationDataShareService: LoanOperationsDataShareService,
     private loanPaymentService: LoanPaymentService,
@@ -26,6 +27,7 @@ export class LoanPaymentComponent implements OnInit {
   public accounts$:Observable<any>;
   public selectedAccount: string | null = null;
   public errorMessage: string = '';
+  public amortizationUuid: string;
   
   ngOnInit(): void {
     this.accounts$ = this._accountService.accounts$;
@@ -34,11 +36,39 @@ export class LoanPaymentComponent implements OnInit {
         this.loan = loan;
       }
     });
+
+    this.loanPaymentService
+  .findByLoanAndQuotaStatus(this.loan.uuid, "PEN")
+  .subscribe(
+    (response) => {
+      if (response && response.length > 0) {
+        response.sort((a, b) => a.quotaNum - b.quotaNum);
+        this.montoAPagar = response[0].quotaAmount;
+        this.amortizationUuid = response[0].uuid;
+
+        this.loan.nextPayment = response[0].quotaAmount;
+        this.loan.nextPaymentDate=response[0].dueDate;
+      } else {
+        this.errorMessage = 'No existe nada pendiente de pago';
+        setTimeout(() => {
+          this.router.navigate(['/']); 
+        }, 3000); 
+      }
+    },
+    (error) => {
+      this.errorMessage = 'Ocurrió un error al obtener los datos del préstamo';
+      setTimeout(() => {
+        this.router.navigate(['/']); 
+      }, 3000); 
+    }
+  );
+
+
   }
 
  
 
-   async payTotal() {
+  payTotal() {
     if (this.selectedAccount === null ) {
       this.errorMessage = 'Selecciona una cuenta y el monto a pagar';
       this.showSuccessPopup = false;
@@ -66,7 +96,10 @@ export class LoanPaymentComponent implements OnInit {
 
     this.accountTransactionService.createTransacctionAccount(this.montoAPagar,'20205224',this.selectedAccount,'PAGO PRESTAMO').subscribe(
       response => {
-        this.showSuccessMessage();
+        console.log(response);
+        const transactionId = response.id;
+        this.createPayment(transactionId,this.amortizationUuid,1,this.montoAPagar)
+        
       },
       error => {
         this.showErrorMessage();
@@ -108,13 +141,13 @@ export class LoanPaymentComponent implements OnInit {
   }
 
 
-  public createPayment(accountId: number,amortizationUuid: String,branchId: number, amountToPay: number): void {
-    this.loanPaymentService.createPaymentLoan(accountId,amortizationUuid,branchId,amountToPay).subscribe(
+  public createPayment(accounTransactiontId: number,amortizationUuid: string,branchId: number, amountToPay: number): void {
+    this.loanPaymentService.createPaymentLoan(accounTransactiontId,amortizationUuid,branchId,amountToPay).subscribe(
       response => {
-        this.showSuccessPopup = true;
+        this.showSuccessMessage();
       },
       error => {
-        this.showSuccessPopup = false;
+        this.showErrorMessage();
       }
     );
   }
