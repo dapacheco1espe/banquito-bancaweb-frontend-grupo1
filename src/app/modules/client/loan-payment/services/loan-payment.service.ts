@@ -48,6 +48,7 @@ export class LoanPaymentService {
       transactionType: 'LOAN_REPAID',
       notes: notes
     };
+    console.log(transactionData.transactionType);
     const urlWithParams = `${this.urlApiTransaction}/transaction`;
     return this._http.post(urlWithParams, transactionData);
     

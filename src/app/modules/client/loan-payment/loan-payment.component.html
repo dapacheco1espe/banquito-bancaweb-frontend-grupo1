@@ -22,7 +22,7 @@
             <ng-container *ngIf="(accounts$ | async) as accounts">
                 <div class="mt-4">
                   <label class="block text-lg font-bold mb-2" for="selectAccount">Selecciona una cuenta:</label>
-                  <select id="selectAccount" [(ngModel)]="selectedAccount" class="w-full border border-gray-300 px-4 py-2 rounded">
+                  <select [disabled]="!isNextPaymentMonthCurrent()" id="selectAccount" [(ngModel)]="selectedAccount" class="w-full border border-gray-300 px-4 py-2 rounded">
                     <option *ngFor="let account of accounts" [value]="account.codeInternalAccount">{{ account.name }}</option>
                   </select>
                 </div>
@@ -32,10 +32,12 @@
               
               <button
                 (click)="payTotal()"
+                [disabled]="!isNextPaymentMonthCurrent()"
                 class="bg-blue-500 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none"
               >
-                Pagar
+                {{ isNextPaymentMonthCurrent() ? 'Pagar' : 'Cuota no habilitada' }}
               </button>
+
               <p *ngIf="errorMessage" class="text-red-500 mt-2">{{ errorMessage }}</p>
             </div>
           </div>

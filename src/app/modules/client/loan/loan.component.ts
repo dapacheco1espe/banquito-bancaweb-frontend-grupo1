@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Loan } from '../Models/Loan';
-import { LoanService } from 'app/mock-api/http/loans.services';
+import { LoanService } from '../loan/services/loan.service';
 import { LoanOperationsDataShareService } from '../services/loan-operations-data-share.service';
 @Component({
   selector: 'app-loan',
@@ -28,7 +28,7 @@ export class LoanComponent implements OnInit {
     this._router.navigateByUrl('/client/loan-operations');
   }
   public getLoan() {
-    this.loan.getLoan().subscribe({
+    this.loan.loans$.subscribe({
       next: (response) => {
         this.loa = response;
 

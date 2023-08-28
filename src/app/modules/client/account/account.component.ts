@@ -66,13 +66,6 @@ export class AccountComponent implements OnInit {
       event.stopPropagation();
     }
     
-    /*obtainProductAccount(){
-      this._accountService.getProductAccount().subscribe( data=>{
-        this.dataProductAccount=data;
-        
-      } )
-    }
-    */
 
     obtainProductAccount() {
       this._accountService.getProductAccount().subscribe(data => {

@@ -38,7 +38,7 @@ export class LoanPaymentComponent implements OnInit {
     });
 
     this.loanPaymentService
-  .findByLoanAndQuotaStatus(this.loan.uuid, "PEN")
+  .findByLoanAndQuotaStatus(this.loan.uuid, "CUR")
   .subscribe(
     (response) => {
       if (response && response.length > 0) {
@@ -94,10 +94,11 @@ export class LoanPaymentComponent implements OnInit {
 
     //console.log(this.montoAPagar,'',this.selectedAccount);
 
-    this.accountTransactionService.createTransacctionAccount(this.montoAPagar,'20205224',this.selectedAccount,'PAGO PRESTAMO').subscribe(
+    this.loanPaymentService.createTransacctionAccount(this.montoAPagar,'20205224',this.selectedAccount,'PAGO PRESTAMO').subscribe(
       response => {
         console.log(response);
         const transactionId = response.id;
+        console.log(transactionId+"-"+this.amortizationUuid+"-"+1+"-"+this.montoAPagar);
         this.createPayment(transactionId,this.amortizationUuid,1,this.montoAPagar)
         
       },
@@ -151,6 +152,14 @@ export class LoanPaymentComponent implements OnInit {
       }
     );
   }
+
+  isNextPaymentMonthCurrent(): boolean {
+    const nextPaymentDate = new Date(this.loan.nextPaymentDate);
+    const currentMonth = new Date().getMonth();
+  
+    return nextPaymentDate.getMonth() === currentMonth;
+  }
+  
 
 
 }

@@ -3,34 +3,34 @@
     <div class="flex flex-wrap">
       <div class="w-full md:w-4/5 mb-8 md:mb-8">
         <h2 class="text-lg font-bold mb-2">Datos generales del préstamo</h2>
-        <table class="w-full border border-gray-200">
-            <thead>
-                <tr>
-                  <th colspan="4" class="p-2 border-b">Detalles</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                    <td class="font-bold p-2 border-b">Fecha:</td>
-                  <td class="p-2 border-b">{{ getCurrentDate() }}</td>
-                  <td class="font-bold p-2 border-b">Monto:</td>
-                    <td class="p-2 border-b">$ {{ loanForm.amount }}</td>
-                  
-                </tr>
-                <tr>
-                    <td class="font-bold p-2 border-b">Tipo de Préstamo:</td>
-                  <td class="p-2 border-b">{{ loanForm.nameProduct }}</td>
-                  <td class="font-bold p-2 border-b">Interes Anual:</td>
-                    <td class="p-2 border-b">16.5%</td>
-                  </tr>
-                  <tr>
-                    <td class="font-bold p-2 border-b">Sistema de Amortización: </td>
-                    <td class="p-2 border-b">{{ loanForm.typeAmortization.toUpperCase() }}</td>
-                    <td class="font-bold p-2 border-b">Cuotas: </td>
-                    <td class="p-2 border-b">{{ loanForm.repaymentPeriodCount }} meses</td>
-                  </tr>
-              </tbody>
+        <table class="w-full border border-gray-200 shadow-md">
+          <thead>
+            <tr>
+              <th colspan="4" class="p-2 border-b">Detalles</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="font-bold p-2 border-b">Fecha:</td>
+              <td class="p-2 border-b">{{ getCurrentDate() }}</td>
+              <td class="font-bold p-2 border-b">Monto:</td>
+              <td class="p-2 border-b">$ {{ loanForm.amount }}</td>
+            </tr>
+            <tr>
+              <td class="font-bold p-2 border-b">Tipo de Préstamo:</td>
+              <td class="p-2 border-b">{{ loanForm.nameProduct }}</td>
+              <td class="font-bold p-2 border-b">Cuotas:</td>
+              <td class="p-2 border-b">{{ loanForm.repaymentPeriodCount }} meses</td>
+            </tr>
+            <tr>
+              <td class="font-bold p-2 border-b">Sistema de Amortización:</td>
+              <td class="p-2 border-b">{{ loanForm.typeAmortization.toUpperCase() }}</td>
+              <td class="font-bold p-2 border-b"></td>
+              <td class="p-2 border-b"></td>
+            </tr>
+          </tbody>
         </table>
+        
       </div>
   
       <div class="w-full md:w-4/5 mx-auto">
@@ -47,7 +47,7 @@
             </tr>
           </thead>
           <tbody class="text-center">
-            <tr *ngFor="let amortization of loanAmortization">
+            <tr *ngFor="let amortization of  loanAmortization.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">
               <td class="p-2 border-b">{{ amortization.quotaNum }}</td>
               <td class="p-2 border-b">{{ amortization.dueDate | date: 'yyyy-MM-dd' }}</td>
               <td class="p-2 border-b">{{ amortization.remainingBalance }}</td>
@@ -57,7 +57,23 @@
             </tr>
           </tbody>
         </table>
-        
+        <div class="flex justify-center my-4 space-x-4"  *ngIf="loanAmortization && loanAmortization.length > 0">
+          <button
+            class="px-4 py-2 rounded bg-blue-800 text-white"
+            (click)="changePage(currentPage - 1)"
+            [disabled]="currentPage === 1"
+          >
+            Anterior
+          </button>
+          <span class="text-lg font-semibold">{{ currentPage }}</span>
+          <button
+            class="px-4 py-2 rounded bg-blue-800 text-white"
+            (click)="changePage(currentPage + 1)"
+            [disabled]="currentPage * itemsPerPage >= loanAmortization.length"
+          >
+            Siguiente
+          </button>
+        </div>
         
       </div>
     </div>
@@ -77,7 +93,7 @@
         <p class="mb-2">Donde desea que sea depositado el dinero:</p>
         <ng-container *ngIf="(accounts$ | async) as accounts">
         <select class="mt-2 p-2 border rounded" [(ngModel)]="selectedAccountKey">
-          <option *ngFor="let account of accounts" [value]="account.id">{{ account.name }}</option>
+          <option *ngFor="let account of accounts" [ngValue]="account">{{ account.name }} - {{ account.codeInternalAccount }}</option>
         </select>
       </ng-container>
         <div class="border-t mt-4 pt-4">

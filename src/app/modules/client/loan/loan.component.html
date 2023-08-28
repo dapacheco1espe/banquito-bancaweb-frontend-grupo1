@@ -25,18 +25,18 @@
                         {{ item.name }}
                       </h5>
                       <p class="text-primary-400 mb-2 text-base tracking-tight dark:text-white">
-                          Nro. {{ item.code }}
+                        Cuotas. {{ item.repaymentInstallments }}
                       </p>
                   </div>
               </div>
               <div>
                   <p class="text-primary-400 font-normal">
-                      Siguente cuota a pagar:
-                      {{ item.nextPaymentDate | date : "dd/MM/yyyy" }}
+                    Fecha Aprobación
+                    {{ item.approvedDate | date : "dd/MM/yyyy" }}
                   </p>
                   <span class="mb-2 text-2xl font-bold tracking-tight text-primary-500 dark:text-white">&#36;</span>
                   <span class="mb-2 text-2xl font-bold tracking-tight text-primary-500 dark:text-white">{{
-                    item.nextPayment }}</span>
+                    item.amount }}</span>
               </div>
             </div>
       </div>
