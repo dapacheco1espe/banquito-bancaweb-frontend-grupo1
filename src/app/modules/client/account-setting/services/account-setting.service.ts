@@ -9,16 +9,18 @@ import { catchError, tap } from 'rxjs/operators';
 })
 export class AccountSettingService {
   private urlApi='';
+  private jwt='';
 
   
 
   constructor(private _http:HttpClient) { 
     this.urlApi=environment.urlApiAccount;
+    this.jwt=environment.apiSecurity;
   }
   
   
   public updateMaxOverdraft(accountUk: string, maxOverdraft: number): Observable<any> {
-    const url = `${this.urlApi}/account/${accountUk}/max-overdraft`;
+    const url = `${this.urlApi}/account/${accountUk}/max-overdraft${this.jwt}`;
     const queryParams = new HttpParams().set('maxOverdraft', maxOverdraft.toString());
   
     return this._http.put(url, null, { params: queryParams }).pipe(

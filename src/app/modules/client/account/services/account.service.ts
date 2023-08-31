@@ -9,45 +9,47 @@ import { environment } from 'environments/environment';
   providedIn: 'root'
 })
 export class AccountService {
-  
-  private _accounts:BehaviorSubject<Account[]> = new BehaviorSubject<Account[]>([]);
 
-  
+  private _accounts: BehaviorSubject<Account[]> = new BehaviorSubject<Account[]>([]);
+
+
   private urlApi='';
-  
-  private urlProductApi='';
 
-  constructor(private _http:HttpClient) {
-    
-    this.urlApi=environment.urlApiAccount
-    this.urlProductApi=environment.urlApiAccountProduct
-    
+  private urlProductApi='';
+  private jwt='';
+
+  constructor(private _http: HttpClient) {
+
+    this.urlApi=environment.urlApiAccount;
+    this.urlProductApi=environment.urlApiAccountProduct;
+    this.jwt=environment.apiSecurity;
+
   }
 
-  get accounts$():Observable<Account[]>{
+  get accounts$(): Observable<Account[]>{
 
     return this._accounts.asObservable();
   }
-  
+
   public getUserAccounts(customerUK: String): Observable<any> {
-    const urlWithParams = `${this.urlApi}/accounts-client/${customerUK}`; 
+    const urlWithParams = `${this.urlApi}/accounts-client/${customerUK}${this.jwt}`;
     return this._http.get(urlWithParams).pipe(
-      tap(response => {
+      tap((response) => {
         this._accounts.next(response);
       })
     );
   }
 
-  
+
   public getAccount(accountUK: String): Observable<any> {
-    const urlWithParams = `${this.urlApi}/account/${accountUK}`; 
+    const urlWithParams = `${this.urlApi}/account/${accountUK}${this.jwt}`;
     return this._http.get(urlWithParams).pipe(
-      tap(response => {
+      tap((response) => {
         this._accounts.next(response);
       })
     );
   }
-  
+
   public createAccount(clientUk: String, productUk: string): Observable<any> {
     const accountData = {
       clientUk: clientUk,
@@ -66,23 +68,23 @@ export class AccountService {
       state: 'ACT',
       interestRate: 0,
     };
-
+    const url=this.urlApi+this.jwt;
     return this._http.post(this.urlApi, accountData).pipe(
-      tap(response => {
+      tap((response) => {
         this.getUserAccounts(clientUk).subscribe();
       })
     );
   }
 
-  
+
 
   public getProductAccount(): Observable<any>{
-    const urlApiProduct = `${this.urlProductApi}/productos`; 
+    const urlApiProduct = `${this.urlProductApi}/productos${this.jwt}`;
     return this._http.get<any>(urlApiProduct);
   }
 
   getTypeOfAccount(productId: string): Promise<string> {
-    const urlMongo = `${this.urlProductApi}/productos/${productId}`;
+    const urlMongo = `${this.urlProductApi}/productos/${productId}${this.jwt}`;
     return this._http.get<any>(urlMongo).toPromise()
         .then(response => response.name);
 }
