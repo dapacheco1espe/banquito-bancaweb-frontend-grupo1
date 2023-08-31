@@ -11,15 +11,17 @@ export class AccountTransactionService {
 
   private urlApi='';
  private urlApiTransaction='';
+ private jwt='';
 
   constructor(private _http:HttpClient) {
     this.urlApi=environment.urlApiAccount;
     this.urlApiTransaction=environment.urlApiAccountTransaction;
+    this.jwt=environment.apiSecurity;
    }
 
   
   public getAccountByCodeInternal(internalAccountCode: string): Observable<AccountDestination> {
-    const urlWithParams = `${this.urlApi}/account-internalcode/${internalAccountCode}`;
+    const urlWithParams = `${this.urlApi}/account-internalcode/${internalAccountCode}${this.jwt}`;
     return this._http.get<AccountDestination>(urlWithParams);
   }
 
@@ -34,7 +36,7 @@ export class AccountTransactionService {
       transactionType: 'TRANSFER',
       notes: notes
     };
-    const urlWithParams = `${this.urlApiTransaction}/transaction`;
+    const urlWithParams = `${this.urlApiTransaction}/transaction${this.jwt}`;
     return this._http.post(urlWithParams, transactionData).pipe(
       map(response => {
         //this.getUserAccounts(customerId).subscribe();

@@ -11,14 +11,16 @@ export class LoanAmortizationService {
 
   private urlApiLoanAmortization='';
   private urlApiLoan='';
+  private jwt='';
 
   constructor(private _http:HttpClient) {
     this.urlApiLoanAmortization=environment.urlApiLoanAmortization;
     this.urlApiLoan=environment.urlApiLoan;
+    this.jwt=environment.apiSecurity;
    }
 
   public getAmortization(type: string,amount: number,repaymentInstallments: number ): Observable<any> {
-    const urlWithParams = `${this.urlApiLoanAmortization}/simulate`; 
+    const urlWithParams = `${this.urlApiLoanAmortization}/simulate${this.jwt}`; 
     const amortizationData = {
       type: type,
       amount: amount,
@@ -33,7 +35,7 @@ export class LoanAmortizationService {
     );
   }
   public generateAmortization(loanId: number,type: string ): Observable<any> {
-    const urlWithParams = `${this.urlApiLoanAmortization}/generate`; 
+    const urlWithParams = `${this.urlApiLoanAmortization}/generate${this.jwt}`; 
     const loanData = {
       type: type,
       loanId: loanId,
@@ -57,7 +59,7 @@ export class LoanAmortizationService {
       repaymentPeriodCount:repaymentPeriodCount,
       repaymentPeriodUnit:repaymentPeriodUnit
     };
-    const urlWithParams = `${this.urlApiLoan}`;
+    const urlWithParams = `${this.urlApiLoan}${this.jwt}`;
     return this._http.post(urlWithParams, transactionData);
   }
 }

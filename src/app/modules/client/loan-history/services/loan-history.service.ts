@@ -11,6 +11,7 @@ import { environment } from 'environments/environment';
 export class LoanHistoryService {
   
   private urlApiAmortization='';
+  private jwt='';
 
   private _loanTransaction:BehaviorSubject<LoanTransaction[]> = new BehaviorSubject<LoanTransaction[]>([]);
 
@@ -19,12 +20,13 @@ export class LoanHistoryService {
     private _http:HttpClient
   ) {
     this.urlApiAmortization=environment.urlApiLoanAmortization;
+    this.jwt=environment.apiSecurity;
    }
   
 
   
   findByLoan(uuid: String): Observable<any> {
-    const urlWithParams = `${this.urlApiAmortization}/findByLoan/${uuid}`;
+    const urlWithParams = `${this.urlApiAmortization}/findByLoan/${uuid}${this.jwt}`;
     return this._http.get(urlWithParams);
   }
 

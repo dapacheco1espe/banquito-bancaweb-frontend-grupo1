@@ -13,11 +13,13 @@ export class LoanService {
   private _loans:BehaviorSubject<Loan[]> = new BehaviorSubject<Loan[]>([]);
 
   private urlApi='';
+private jwt='';
 
   constructor(
     private _http:HttpClient
-  ) { 
-    this.urlApi=environment.urlApiLoan
+  ) {
+    this.jwt=environment.apiSecurity;
+    this.urlApi=environment.urlApiLoan;
   }
 
   get loans$():Observable<Loan[]>{
@@ -25,9 +27,9 @@ export class LoanService {
     return this._loans.asObservable();
   }
 
-  
+
   public getUserLoans(customerUK: String): Observable<any> {
-    const urlWithParams = `${this.urlApi}/getLoansByAccount/${customerUK}`; 
+    const urlWithParams = `${this.urlApi}/getLoansByAccount/${customerUK}${this.jwt}`;
     return this._http.get(urlWithParams).pipe(
       tap(response => {
         this._loans.next(response);
@@ -52,13 +54,13 @@ export class LoanService {
       repaymentPeriodUnit: 0
     };
 
-    return this._http.post(this.urlApi, loanData).pipe(
+    return this._http.post(`${this.urlApi}${this.jwt}` , loanData).pipe(
       tap(response => {
         this.getUserLoans(customerId).subscribe();
       })
     );
   }
 
-  
-  
+
+
 }

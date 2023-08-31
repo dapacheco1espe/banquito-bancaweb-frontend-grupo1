@@ -9,17 +9,19 @@ import { environment } from 'environments/environment';
 })
 export class AccountHistoryService {
   private urlApi='';
+  private jwt='';
 
   private _accountTransaction:BehaviorSubject<AccountTransaction[]> = new BehaviorSubject<AccountTransaction[]>([]);
 
   constructor(private _http:HttpClient) {
     this.urlApi=environment.urlApiAccountTransaction;
+    this.jwt=environment.apiSecurity;
    }
 
    public getHistoryAccount(acountUK: String, startDate?: Date, endDate?: Date): Observable<any> {
     let urlWithParams = `${this.urlApi}/history-transaction/${acountUK}`; 
     if (startDate && endDate) {
-      urlWithParams += `?startDate=${startDate.getTime()}&endDate=${endDate.getTime()}`;
+      urlWithParams += `?startDate=${startDate.getTime()}&endDate=${endDate.getTime()}${this.jwt}`;
       
     }
     return this._http.get(urlWithParams).pipe(

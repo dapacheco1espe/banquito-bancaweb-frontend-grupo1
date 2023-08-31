@@ -11,10 +11,12 @@ import { environment } from 'environments/environment';
 export class LoanProductService {
 
   private urlApi='';
+  private jwt='';
   private _productsLoan:BehaviorSubject<LoanProduct[]> = new BehaviorSubject<LoanProduct[]>([]);
 
   constructor(private _http:HttpClient) { 
     this.urlApi=environment.urlApiLoanProduct;
+    this.jwt=environment.apiSecurity;
   }
 
   get productLoans$():Observable<LoanProduct[]>{
@@ -23,7 +25,7 @@ export class LoanProductService {
   }
 
   public getLoanProducts(): Observable<any> {
-    const urlWithParams = `${this.urlApi}/productos`; 
+    const urlWithParams = `${this.urlApi}/productos${this.jwt}`; 
     return this._http.get(urlWithParams).pipe(
       tap(response => {
         this._productsLoan.next(response);
