@@ -20,8 +20,10 @@ export class LoanProductComponent implements OnInit {
 
   iconMappings: { [key: string]: string } = {
     'Préstamo Consumo': 'shopping_bag',
-    'Préstamo Hipotecario': 'home',
-    'Préstamo Personal': 'person'
+    'Préstamo Hipotecario Clientes': 'home',
+    'Préstamo Personal': 'person',
+    'Préstamo Hipotecario Empresarial': 'business',
+    'Préstamo Vehicular': 'directions_car'
   };
   
 

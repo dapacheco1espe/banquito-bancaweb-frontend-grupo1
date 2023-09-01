@@ -60,7 +60,7 @@
       
     </div>
 
-    <table class="mt-8 w-full" *ngIf="transaction && transaction.length > 0 ; else noTransactions">
+    <table class="mt-8 w-full" *ngIf="transaction && transaction.length > 0; else noTransactions">
       <thead>
         <tr>
           <th class="bg-gray-200 text-left py-2 px-4">Fecha</th>
@@ -71,7 +71,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let trans of transaction">
+        <tr *ngFor="let trans of transaction.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">
           <td class="border py-2 px-4">{{ trans.bookingDate | date: 'dd/MM/yyyy' }}</td>
           <td class="border py-2 px-4 text-center">{{ trans.reference }}</td>
           <td class="border py-2 px-4 text-center">{{getTransactionTypeTranslation(trans.transactionType)}}</td>
@@ -80,6 +80,23 @@
         </tr>
       </tbody>
     </table>
+    <div class="flex justify-center my-4 space-x-4"  *ngIf="transaction && transaction.length > 0">
+          <button
+            class="px-4 py-2 rounded bg-blue-800 text-white"
+            (click)="changePage(currentPage - 1)"
+            [disabled]="currentPage === 1"
+          >
+            Anterior
+          </button>
+          <span class="text-lg font-semibold">{{ currentPage }}</span>
+          <button
+            class="px-4 py-2 rounded bg-blue-800 text-white"
+            (click)="changePage(currentPage + 1)"
+            [disabled]="currentPage * itemsPerPage >= transaction.length"
+          >
+            Siguiente
+          </button>
+        </div>
     <ng-template #noTransactions>
       <p>No hay transacciones disponibles.</p>
     </ng-template>
