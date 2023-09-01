@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthUtils } from 'app/core/auth/auth.utils';
 import { UserService } from 'app/core/user/user.service';
+import { environment } from 'environments/environment';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 
@@ -77,7 +78,7 @@ export class AuthService
             emailAddress:credentials.email,
             password: credentials.password,
         };
-        return this._httpClient.post('http://localhost:8080/login', cred, {observe: 'response'}).pipe(
+        return this._httpClient.post(`${environment.urlLogin}`, cred, {observe: 'response'}).pipe(
             switchMap((response: any) => {
                 console.log(response);
                 // Store the access token in the local storage
