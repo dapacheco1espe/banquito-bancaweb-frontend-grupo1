@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AuthUtils } from 'app/core/auth/auth.utils';
-import { UserService } from 'app/core/user/user.service';
+import { HttpClient } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
+import { AuthUtils } from 'app/core/auth/auth.utils';
+import { UserService } from 'app/core/user/user.service';
 
 @Injectable()
 export class AuthService
@@ -73,15 +73,12 @@ export class AuthService
         {
             return throwError('User is already logged in.');
         }
-        const cred = {
-            emailAddress:credentials.email,
-            password: credentials.password,
-        };
-        return this._httpClient.post('http://localhost:8080/login', cred, {observe: 'response'}).pipe(
+
+        return this._httpClient.post('api/auth/sign-in', credentials).pipe(
             switchMap((response: any) => {
-                console.log(response);
+
                 // Store the access token in the local storage
-                this.accessToken = response.headers.get('Authorization').split("Bearer ")[1];
+                this.accessToken = response.accessToken;
 
                 // Set the authenticated flag to true
                 this._authenticated = true;
@@ -185,6 +182,6 @@ export class AuthService
         }
 
         // If the access token exists and it didn't expire, sign in using it
-        return of(localStorage.getItem("accessToken") !='' ? true : false);
+        return this.signInUsingToken();
     }
 }
