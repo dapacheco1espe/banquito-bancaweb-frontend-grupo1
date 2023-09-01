@@ -9,4 +9,5 @@ export const environment = {
     urlApiLoanAmortization: 'https://arquitectura-1sa89r3l.uc.gateway.dev/api/v1/amortization',
     urlApiLoanRepayment: 'https://arquitectura-1sa89r3l.uc.gateway.dev/api/v1/repayment',
     apiSecurity: ''//'?key=AIzaSyDMQIDdAhNpwjoovbocJ1xJfzzMZZqGmFY',
+
 };
