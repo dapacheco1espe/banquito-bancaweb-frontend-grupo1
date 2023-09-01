@@ -28,6 +28,8 @@ export class AccountHistoryComponent implements OnInit {
 
   accountId: string = '0';
   accountData: any;
+  currentPage: number = 1;
+  itemsPerPage: number = 10;
 
   public transaction!: AccountTransaction[];
   public filterForm: FormGroup;
@@ -77,6 +79,7 @@ export class AccountHistoryComponent implements OnInit {
     this.accountTransaction.getHistoryAccount(accountUK, startDate, endDate).subscribe({
       next: (response) => {
         this.transaction = response;
+        this.changePage(1);
       },
       error: (error) => {
         this.transaction = []; 
@@ -105,6 +108,11 @@ public transactions: any[];
   
   get selectedMaxEndDate(): string {
     return this.selectedStartDate ? moment().format('YYYY-MM-DD') : '';
+  }
+  changePage(newPage: number) {
+    if (newPage >= 1 && newPage <= Math.ceil(this.transaction.length / this.itemsPerPage)) {
+      this.currentPage = newPage;
+    }
   }
   
   
