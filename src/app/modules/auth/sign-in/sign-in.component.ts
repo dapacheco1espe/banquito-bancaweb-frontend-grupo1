@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
+import { Credentials } from "../types/credentials";
 
 @Component({
     selector     : 'auth-sign-in',
@@ -21,6 +22,10 @@ export class AuthSignInComponent implements OnInit
     };
     signInForm: FormGroup;
     showAlert: boolean = false;
+    creds:Credentials={
+        emailAddress:'',
+        password:''
+    };
 
     /**
      * Constructor
@@ -29,7 +34,8 @@ export class AuthSignInComponent implements OnInit
         private _activatedRoute: ActivatedRoute,
         private _authService: AuthService,
         private _formBuilder: FormBuilder,
-        private _router: Router
+        private _router: Router,
+        private auth: AuthService
     )
     {
     }
@@ -45,8 +51,8 @@ export class AuthSignInComponent implements OnInit
     {
         // Create the form
         this.signInForm = this._formBuilder.group({
-            email     : ['hughes.brian@company.com', [Validators.required, Validators.email]],
-            password  : ['admin', Validators.required],
+            email     : ['rpfreire1@espe.edu.ec', [Validators.required, Validators.email]],
+            password  : ['123', Validators.required],
             rememberMe: ['']
         });
     }
@@ -71,8 +77,11 @@ export class AuthSignInComponent implements OnInit
 
         // Hide the alert
         this.showAlert = false;
-
+        console.log(this.signInForm.value);
+        this.creds.emailAddress=this.signInForm.value.email;
+        this.creds.password=this.signInForm.value.password;
         // Sign in
+        console.log(this.creds);
         this._authService.signIn(this.signInForm.value)
             .subscribe(
                 () => {
@@ -88,21 +97,21 @@ export class AuthSignInComponent implements OnInit
 
                 },
                 (response) => {
-
-                    // Re-enable the form
-                    this.signInForm.enable();
-
-                    // Reset the form
-                    this.signInNgForm.resetForm();
-
-                    // Set the alert
-                    this.alert = {
-                        type   : 'error',
-                        message: 'Wrong email or password'
-                    };
-
-                    // Show the alert
-                    this.showAlert = true;
+                    //
+                    // // Re-enable the form
+                     this.signInForm.enable();
+                    //
+                    // // Reset the form
+                     this.signInNgForm.resetForm();
+                    //
+                    // // Set the alert
+                     this.alert = {
+                         type   : 'error',
+                         message: 'Correo o contraseña incorrecta'
+                     };
+                    //
+                    // // Show the alert
+                     this.showAlert = true;
                 }
             );
     }
