@@ -1,7 +1,6 @@
 export const environment = {
     production: true,
-    urlApiAccount:
-        'https://arquitectura-1sa89r3l.uc.gateway.dev/api/v1/accounts',
+    urlApiAccount:        'https://arquitectura-1sa89r3l.uc.gateway.dev/api/v1/accounts',
     urlApiAccountProduct:
         'https://arquitectura-1sa89r3l.uc.gateway.dev/api/v1/productAccount',
     urlApiAccountTransaction:
