@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
-import {Credentials} from "../types/credentials";
+import { Credentials } from "../types/credentials";
 
 @Component({
     selector     : 'auth-sign-in',
@@ -51,8 +51,8 @@ export class AuthSignInComponent implements OnInit
     {
         // Create the form
         this.signInForm = this._formBuilder.group({
-            email     : ['', [Validators.required, Validators.email]],
-            password  : ['', Validators.required],
+            email     : ['rpfreire1@espe.edu.ec', [Validators.required, Validators.email]],
+            password  : ['123', Validators.required],
             rememberMe: ['']
         });
     }
@@ -82,7 +82,7 @@ export class AuthSignInComponent implements OnInit
         this.creds.password=this.signInForm.value.password;
         // Sign in
         console.log(this.creds);
-        this._authService.signIn(this.creds)
+        this._authService.signIn(this.signInForm.value)
             .subscribe(
                 () => {
 
