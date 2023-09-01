@@ -4,6 +4,7 @@ import { Observable, of, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { AuthUtils } from 'app/core/auth/auth.utils';
 import { UserService } from 'app/core/user/user.service';
+import {Credentials} from "../../modules/auth/types/credentials";
 
 @Injectable()
 export class AuthService
@@ -66,7 +67,7 @@ export class AuthService
      *
      * @param credentials
      */
-    signIn(credentials: { email: string; password: string }): Observable<any>
+    signIn(credentials: Credentials): Observable<any>
     {
         // Throw error, if the user is already logged in
         if ( this._authenticated )
@@ -74,22 +75,36 @@ export class AuthService
             return throwError('User is already logged in.');
         }
 
-        return this._httpClient.post('api/auth/sign-in', credentials).pipe(
+        return this._httpClient.post('http://localhost:8080/login', credentials,{
+            observe: 'response'
+        }).pipe(
             switchMap((response: any) => {
+                const body=response.body;
+                const headers=response.headers;
+                console.log("entró");
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                const bearerToken = headers.get('Authorization')!;
+                const token=bearerToken.replace('Bearer ','');
+                localStorage.setItem('token',token);
+                return body;
 
-                // Store the access token in the local storage
-                this.accessToken = response.accessToken;
+                // // Store the access token in the local storage
+                 this.accessToken = response.accessToken;
 
-                // Set the authenticated flag to true
-                this._authenticated = true;
-
-                // Store the user on the user service
-                this._userService.user = response.user;
-
-                // Return a new observable with the response
-                return of(response);
+                //
+                // // Set the authenticated flag to true
+                 this._authenticated = true;
+                //
+                // // Store the user on the user service
+                 this._userService.user = response.user;
+                //
+                // // Return a new observable with the response
+                 return of(response);
             })
         );
+    }
+    getToken(){
+        return localStorage.getItem('token');
     }
 
     /**
