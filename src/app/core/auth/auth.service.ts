@@ -69,7 +69,7 @@ export class AuthService
      */
     signIn(credentials: { email: string; password: string }): Observable<any>
     {
-        
+
         // Throw error, if the user is already logged in
         if ( this._authenticated )
         {
@@ -79,7 +79,7 @@ export class AuthService
             emailAddress:credentials.email,
             password: credentials.password,
         };
-        return this._httpClient.post(`${environment.urlLogin}`, cred).pipe(
+        return this._httpClient.post(`${environment.urlLogin}`, cred,{observe:"response"}).pipe(
             switchMap((response: any) => {
 
                 // Store the access token in the local storage
